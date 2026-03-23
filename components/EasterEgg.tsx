@@ -4,30 +4,25 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
-/* ─── Konami Code ─── */
 const KONAMI = [
   'ArrowUp','ArrowUp','ArrowDown','ArrowDown',
   'ArrowLeft','ArrowRight','ArrowLeft','ArrowRight',
   'b','a',
 ];
 
-/* ─── Word triggers ─── */
+/* ─── Word triggers — including new phase 2 routes ─── */
 const WORD_TRIGGERS: Record<string, string> = {
   'about':       '/about',
   'projects':    '/projects',
   'contact':     '/contact',
   'now':         '/now',
+  'uses':        '/uses',
   'unlock soul': '/blog',
 };
 
 const MAX_BUFFER = 20;
 
-interface Toast {
-  id:      number;
-  message: string;
-  color:   string;
-}
-
+interface Toast { id: number; message: string; color: string; }
 let toastId = 0;
 
 export default function EasterEgg() {
@@ -39,27 +34,26 @@ export default function EasterEgg() {
   const showToast = (message: string, color = '#00ff88') => {
     const id = ++toastId;
     setToasts((prev) => [...prev, { id, message, color }]);
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 2800);
+    setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 2800);
   };
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      /* ── Konami check ── */
       const key = e.key;
+
+      /* Konami */
       bufferRef.current = [...bufferRef.current, key].slice(-KONAMI.length);
       if (
         bufferRef.current.length === KONAMI.length &&
         bufferRef.current.every((k, i) => k === KONAMI[i])
       ) {
-        showToast('↑↑↓↓←→←→BA  · Unlocking /now…', '#a899ff');
+        showToast('↑↑↓↓←→←→BA · Unlocking /now…', '#a899ff');
         setTimeout(() => router.push('/now'), 900);
         bufferRef.current = [];
         return;
       }
 
-      /* ── Word trigger check ── */
+      /* Word triggers */
       if (key.length === 1 || key === ' ') {
         wordBufRef.current = (wordBufRef.current + (key === ' ' ? ' ' : key))
           .slice(-MAX_BUFFER)
@@ -80,7 +74,6 @@ export default function EasterEgg() {
         }
       }
 
-      /* Clear buffer on Escape */
       if (key === 'Escape') {
         bufferRef.current  = [];
         wordBufRef.current = '';

@@ -1,12 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import TerminalHero from '@/components/TerminalHero';
 import MagneticButton from '@/components/MagneticButton';
 import ToolsStrip from '@/components/ToolsStrip';
 import ScrollReveal from '@/components/ScrollReveal';
+import InteractiveTerminal from '@/components/InteractiveTerminal';
 
 /* ─── Stats ─── */
 const STATS = [
@@ -17,21 +16,46 @@ const STATS = [
 ];
 
 export default function HomePage() {
-  const [terminalDone, setTerminalDone] = useState(false);
+  const [phase, setPhase] = useState<'terminal' | 'hero'>('terminal');
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20">
-      {/* ── Terminal hero ── */}
-      <TerminalHero onComplete={() => setTerminalDone(true)} />
 
-      {/* ── Hero content (fades in after terminal) ── */}
-      <AnimatePresence>
-        {terminalDone && (
+      {/* ── Phase 1: Interactive Terminal ── */}
+      <AnimatePresence mode="wait">
+        {phase === 'terminal' && (
           <motion.div
+            key="terminal"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0  }}
+            exit={  { opacity: 0, y: -30, scale: 0.97 }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            className="w-full flex flex-col items-center"
+          >
+            <InteractiveTerminal />
+
+            {/* Skip hint */}
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 2.5 }}
+              onClick={() => setPhase('hero')}
+              className="mt-6 font-mono text-xs text-secondary/40 hover:text-secondary/80
+                         transition-colors duration-200 underline underline-offset-4"
+            >
+              skip to portfolio →
+            </motion.button>
+          </motion.div>
+        )}
+
+        {/* ── Phase 2: Hero content ── */}
+        {phase === 'hero' && (
+          <motion.div
+            key="hero"
             initial={{ opacity: 0, y: 36 }}
             animate={{ opacity: 1, y: 0  }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-10 flex flex-col items-center text-center max-w-3xl w-full"
+            className="flex flex-col items-center text-center max-w-3xl w-full"
           >
             {/* Name */}
             <motion.h1
@@ -100,6 +124,15 @@ export default function HomePage() {
                 Download Resume
                 <DownloadIcon />
               </MagneticButton>
+
+              {/* Back to terminal */}
+              <button
+                onClick={() => setPhase('terminal')}
+                className="font-mono text-xs text-secondary/50 hover:text-secondary/90
+                           transition-colors duration-200 underline underline-offset-4"
+              >
+                ← open terminal
+              </button>
             </motion.div>
 
             {/* Stats strip */}
@@ -129,13 +162,14 @@ export default function HomePage() {
         )}
       </AnimatePresence>
 
-      {/* Scroll hint */}
-      {terminalDone && (
+      {/* Scroll hint — only in hero phase */}
+      {phase === 'hero' && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-32 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          className="absolute bottom-32 left-1/2 -translate-x-1/2
+                     flex flex-col items-center gap-2"
         >
           <span className="text-[10px] font-mono text-secondary/50 tracking-widest uppercase">
             scroll
@@ -148,8 +182,8 @@ export default function HomePage() {
         </motion.div>
       )}
 
-      {/* ── Tools strip (below fold) ── */}
-      {terminalDone && (
+      {/* Tools strip */}
+      {phase === 'hero' && (
         <ScrollReveal className="w-full absolute bottom-0 left-0" delay={0.6}>
           <ToolsStrip />
         </ScrollReveal>

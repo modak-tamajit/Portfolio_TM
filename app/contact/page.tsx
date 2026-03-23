@@ -5,31 +5,19 @@ import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import MagneticButton from '@/components/MagneticButton';
 
+/* ─────────────────────────────────────────────
+   FORMSPREE
+   1. Go to https://formspree.io/new
+   2. Create a free form
+   3. Replace XXXXXXXX with your form ID
+───────────────────────────────────────────── */
+const FORMSPREE_URL = 'https://formspree.io/f/XXXXXXXX';
+
 const SOCIAL_LINKS = [
-  {
-    label: 'Email',
-    value: 'modaktamajit999@gmail.com',
-    href:  'mailto:modaktamajit999@gmail.com',
-    icon:  '✉',
-  },
-  {
-    label: 'GitHub',
-    value: '@modak-tamajit',
-    href:  'https://github.com/modak-tamajit',
-    icon:  '⊕',
-  },
-  {
-    label: 'LinkedIn',
-    value: 'tamajit-modak-76938b169',
-    href:  'https://linkedin.com/in/tamajit-modak-76938b169',
-    icon:  '◈',
-  },
-  {
-    label: 'Instagram',
-    value: '@am_modak',
-    href:  'https://instagram.com/am_modak',
-    icon:  '◎',
-  },
+  { label: 'Email',     value: 'modaktamajit999@gmail.com',    href: 'mailto:modaktamajit999@gmail.com',                icon: '✉' },
+  { label: 'GitHub',    value: '@modak-tamajit',               href: 'https://github.com/modak-tamajit',               icon: '⊕' },
+  { label: 'LinkedIn',  value: 'tamajit-modak-76938b169',      href: 'https://linkedin.com/in/tamajit-modak-76938b169',icon: '◈' },
+  { label: 'Instagram', value: '@am_modak',                    href: 'https://instagram.com/am_modak',                 icon: '◎' },
 ];
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
@@ -38,22 +26,33 @@ export default function ContactPage() {
   const [status, setStatus] = useState<Status>('idle');
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus('sending');
 
-    /* Simulate async send – wire to Formspree / Resend / EmailJS in production */
-    await new Promise((r) => setTimeout(r, 1400));
-    setStatus('sent');
-    formRef.current?.reset();
-
-    setTimeout(() => setStatus('idle'), 4000);
+    try {
+      const res = await fetch(FORMSPREE_URL, {
+        method:  'POST',
+        body:    new FormData(e.currentTarget),
+        headers: { Accept: 'application/json' },
+      });
+      if (res.ok) {
+        setStatus('sent');
+        formRef.current?.reset();
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 4000);
+      }
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   return (
     <div className="min-h-screen px-4 py-20 max-w-5xl mx-auto">
 
-      {/* Page header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0  }}
@@ -77,13 +76,12 @@ export default function ContactPage() {
 
       <div className="grid md:grid-cols-[1fr_1.4fr] gap-12">
 
-        {/* ── Left: contact info ── */}
+        {/* ── Left: social links ── */}
         <ScrollReveal direction="left">
           <div className="space-y-5">
             <p className="text-secondary font-mono text-xs tracking-widest uppercase mb-6">
               Find me at
             </p>
-
             {SOCIAL_LINKS.map((link) => (
               <a
                 key={link.label}
@@ -93,54 +91,42 @@ export default function ContactPage() {
                 className="flex items-start gap-4 p-4 rounded-xl group
                            border border-border bg-surface/50
                            hover:border-accent/40 hover:bg-surface-2
-                           transition-all duration-250"
+                           transition-all duration-200"
               >
                 <span className="text-xl text-accent mt-0.5 group-hover:scale-110
                                  transition-transform duration-200 inline-block">
                   {link.icon}
                 </span>
                 <div>
-                  <div className="text-xs font-mono text-secondary mb-0.5">
-                    {link.label}
-                  </div>
-                  <div className="text-primary/80 text-sm font-medium break-all">
-                    {link.value}
-                  </div>
+                  <div className="text-xs font-mono text-secondary mb-0.5">{link.label}</div>
+                  <div className="text-primary/80 text-sm font-medium break-all">{link.value}</div>
                 </div>
               </a>
             ))}
 
-            {/* Availability badge */}
             <div className="flex items-center gap-3 mt-8 p-4 rounded-xl
                             border border-tgreen/20 bg-tgreen/5">
               <span className="w-2 h-2 rounded-full bg-tgreen animate-pulse" />
               <span className="font-mono text-xs text-tgreen">
-                Open to internships & collaborations
+                Open to internships &amp; collaborations
               </span>
             </div>
           </div>
         </ScrollReveal>
 
-        {/* ── Right: contact form ── */}
+        {/* ── Right: form ── */}
         <ScrollReveal direction="right" delay={0.1}>
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
 
             <div className="grid sm:grid-cols-2 gap-5">
-              <FormField label="Name" name="name" placeholder="Your name" required />
-              <FormField
-                label="Email" name="email" type="email"
-                placeholder="your@email.com" required
-              />
+              <FormField label="Name"  name="name"  placeholder="Your name"      required />
+              <FormField label="Email" name="email" placeholder="your@email.com" required type="email" />
             </div>
 
-            <FormField
-              label="Subject" name="subject"
-              placeholder="What's this about?" required
-            />
+            <FormField label="Subject" name="subject" placeholder="What's this about?" required />
 
             <div>
-              <label className="block font-mono text-xs text-secondary tracking-wider
-                                uppercase mb-2">
+              <label className="block font-mono text-xs text-secondary tracking-wider uppercase mb-2">
                 Message
               </label>
               <textarea
@@ -162,19 +148,14 @@ export default function ContactPage() {
                          bg-accent hover:bg-accent-light
                          shadow-[0_0_30px_rgba(124,106,247,0.3)]
                          hover:shadow-[0_0_45px_rgba(124,106,247,0.5)]
-                         disabled:opacity-60 disabled:cursor-not-allowed
-                         transition-all duration-200"
+                         transition-all duration-200 disabled:opacity-60"
             >
               {status === 'sending' ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-white/30 border-t-white
-                                   rounded-full animate-spin" />
-                  Sending…
-                </>
+                <><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Sending…</>
               ) : status === 'sent' ? (
-                <>✓ Message sent! I'll get back soon.</>
+                <>✓ Sent! I&apos;ll get back to you soon.</>
               ) : status === 'error' ? (
-                <>Something went wrong — try emailing directly.</>
+                <>Something went wrong — email me directly.</>
               ) : (
                 <>Send it →</>
               )}
@@ -187,13 +168,10 @@ export default function ContactPage() {
         </ScrollReveal>
       </div>
 
-      {/* Bottom signature */}
       <ScrollReveal delay={0.3}>
         <div className="mt-24 pt-8 border-t border-border flex flex-col sm:flex-row
                         items-center justify-between gap-4">
-          <span className="font-display font-bold text-lg gradient-text">
-            Tamajit Modak
-          </span>
+          <span className="font-display font-bold text-lg gradient-text">Tamajit Modak</span>
           <span className="font-mono text-xs text-secondary/50">
             Built with Next.js · Tailwind · Framer Motion
           </span>
@@ -203,34 +181,17 @@ export default function ContactPage() {
   );
 }
 
-/* Reusable form field */
-function FormField({
-  label,
-  name,
-  type = 'text',
-  placeholder,
-  required,
-}: {
-  label: string;
-  name: string;
-  type?: string;
-  placeholder: string;
-  required?: boolean;
+function FormField({ label, name, type = 'text', placeholder, required }: {
+  label: string; name: string; type?: string; placeholder: string; required?: boolean;
 }) {
   return (
     <div>
-      <label
-        htmlFor={name}
-        className="block font-mono text-xs text-secondary tracking-wider uppercase mb-2"
-      >
+      <label htmlFor={name}
+        className="block font-mono text-xs text-secondary tracking-wider uppercase mb-2">
         {label}
       </label>
       <input
-        id={name}
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        required={required}
+        id={name} name={name} type={type} placeholder={placeholder} required={required}
         className="w-full px-4 py-3 rounded-xl bg-surface border border-border
                    text-primary/90 font-body text-sm placeholder:text-secondary/40
                    focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/20
