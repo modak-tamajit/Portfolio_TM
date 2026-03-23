@@ -23,10 +23,10 @@ const PROJECTS = {
     built:
       'A ~3,500-line terminal operating system built entirely from scratch in C11. No OS-dev libraries, no shortcuts. Features include a custom memory allocator using a free-list strategy, a round-robin process scheduler with priority queues, a minimal file system, and a fully interactive shell.',
     decisions: [
-      { title: 'C11 over C++', detail: 'Staying close to the metal means understanding every byte. No abstractions without first understanding what they abstract. C11 forced that discipline.' },
-      { title: 'Free-list allocator', detail: 'Chose a free-list over a bump allocator for memory management — supports fragmentation handling and coalescing of adjacent free blocks.' },
+      { title: 'C11 over C++',          detail: 'Staying close to the metal means understanding every byte. No abstractions without first understanding what they abstract. C11 forced that discipline.' },
+      { title: 'Free-list allocator',   detail: 'Chose a free-list over a bump allocator for memory management — supports fragmentation handling and coalescing of adjacent free blocks.' },
       { title: 'Round-robin scheduler', detail: 'Simple, predictable, and inspectable. Priority queues added on top for foreground/background process differentiation.' },
-      { title: 'Custom shell', detail: 'Built the shell last — it became the integration test for everything else. If the shell works, the whole stack works.' },
+      { title: 'Custom shell',          detail: 'Built the shell last — it became the integration test for everything else. If the shell works, the whole stack works.' },
     ],
     lessons: [
       'Memory bugs are not random. They have exact causes. Debugging them teaches you to reason precisely.',
@@ -82,21 +82,21 @@ void *forge_malloc(size_t size) {
     color:    '#7c6af7',
     year:     '2024',
     stack:    ['Python', 'FastAPI', 'React', 'OpenAI API', 'PostgreSQL', 'TypeScript'],
-    tagline:  'The information gap in Indian education is real — and it's damaging.',
+    tagline:  "The information gap in Indian education is real — and it's damaging.",
     problem:
-      'Students in tier-2 cities have no access to quality career guidance. They choose branches based on what their cousin did, not what they're suited for. First-generation college students especially have no framework for making these decisions.',
+      "Students in tier-2 cities have no access to quality career guidance. They choose branches based on what their cousin did, not what they're suited for. First-generation college students especially have no framework for making these decisions.",
     built:
-      'An AI-powered platform built for Smart India Hackathon (SIH25094). Takes a student's academic profile, interests, and constraints, then generates personalised career roadmaps, recommends certifications, and tracks progress over time.',
+      "An AI-powered platform built for Smart India Hackathon (SIH25094). Takes a student's academic profile, interests, and constraints, then generates personalised career roadmaps, recommends certifications, and tracks progress over time.",
     decisions: [
-      { title: 'FastAPI backend', detail: 'Async performance, auto-generated OpenAPI docs, and clean type validation via Pydantic. Handles concurrent student sessions without bottlenecks.' },
-      { title: 'Modular AI layer', detail: 'The LLM integration is behind a clean interface — the underlying model can be swapped without touching business logic. Started with OpenAI, designed to be model-agnostic.' },
+      { title: 'FastAPI backend',    detail: 'Async performance, auto-generated OpenAPI docs, and clean type validation via Pydantic. Handles concurrent student sessions without bottlenecks.' },
+      { title: 'Modular AI layer',   detail: "The LLM integration is behind a clean interface — the underlying model can be swapped without touching business logic. Started with OpenAI, designed to be model-agnostic." },
       { title: 'PostgreSQL + JSONB', detail: 'Structured profile data in relational tables, flexible roadmap data in JSONB columns. Best of both worlds for a product where schema evolves fast.' },
-      { title: 'React frontend', detail: 'Deliberately simple UI — the target user is a student in a tier-2 city with a mid-range phone. Performance and clarity over visual complexity.' },
+      { title: 'React frontend',     detail: 'Deliberately simple UI — the target user is a student in a tier-2 city with a mid-range phone. Performance and clarity over visual complexity.' },
     ],
     lessons: [
-      'The hardest part of building for underserved users is resisting the urge to make it "impressive" instead of usable.',
+      "The hardest part of building for underserved users is resisting the urge to make it \"impressive\" instead of usable.",
       'LLM output quality is 80% prompt engineering and 20% model choice.',
-      'PostgreSQL\'s JSONB is surprisingly powerful for rapidly evolving data models.',
+      "PostgreSQL's JSONB is surprisingly powerful for rapidly evolving data models.",
     ],
     impact:
       'Finalist-level project addressing real equity problems in Indian education. LLM-guided approach reduced information paralysis for first-gen college students in simulated user testing.',
@@ -104,11 +104,11 @@ void *forge_malloc(size_t size) {
     demo:   null,
     image:  '/assets/projects/pathpilot.png',
     architecture: [
-      { layer: 'React UI',      desc: 'Profile intake form, roadmap display, progress tracking'           },
-      { layer: 'FastAPI',       desc: 'REST endpoints, session management, request validation'             },
-      { layer: 'AI Engine',     desc: 'Prompt construction, OpenAI API calls, response parsing'            },
-      { layer: 'PostgreSQL',    desc: 'Student profiles (relational) + roadmap data (JSONB)'               },
-      { layer: 'Auth',          desc: 'JWT-based authentication, role separation (student / counselor)'    },
+      { layer: 'React UI',   desc: 'Profile intake form, roadmap display, progress tracking'        },
+      { layer: 'FastAPI',    desc: 'REST endpoints, session management, request validation'          },
+      { layer: 'AI Engine',  desc: 'Prompt construction, OpenAI API calls, response parsing'         },
+      { layer: 'PostgreSQL', desc: 'Student profiles (relational) + roadmap data (JSONB)'            },
+      { layer: 'Auth',       desc: 'JWT-based authentication, role separation (student / counselor)' },
     ],
     codeSnippet: `# Roadmap generation endpoint
 @router.post("/roadmap/generate")
@@ -141,33 +141,33 @@ async def generate_roadmap(
     color:    '#f7a06a',
     year:     '2025',
     stack:    ['Swift', 'SwiftUI', 'Vision Framework', 'Core ML', 'iOS', 'macOS'],
-    tagline:  'Privacy-first document intelligence. No cloud. No compromise.',
+    tagline:  "Privacy-first document intelligence. No cloud. No compromise.",
     problem:
-      'Extracting structured data from PDFs and scanned images is tedious. Third-party tools are clunky, cloud-dependent, and privacy-unfriendly. Your documents contain sensitive information — they shouldn't leave your device.',
+      "Extracting structured data from PDFs and scanned images is tedious. Third-party tools are clunky, cloud-dependent, and privacy-unfriendly. Your documents contain sensitive information — they shouldn't leave your device.",
     built:
-      'A native SwiftUI app for iOS and macOS using Apple's Vision framework for OCR combined with an on-device LLM pipeline to classify, extract, and export structured data from documents. Designed to feel like a first-party Apple app.',
+      "A native SwiftUI app for iOS and macOS using Apple's Vision framework for OCR combined with an on-device LLM pipeline to classify, extract, and export structured data from documents. Designed to feel like a first-party Apple app.",
     decisions: [
-      { title: 'Native-first, no cloud', detail: 'All processing happens on-device. Vision framework for OCR, Core ML for classification. No API calls for sensitive document data.' },
-      { title: 'SwiftUI + declarative arch', detail: 'Single codebase for iOS and macOS via Catalyst. SwiftUI\'s declarative model maps cleanly to the document processing pipeline.' },
-      { title: 'Vision + Core ML pipeline', detail: 'Vision handles text detection and recognition. A fine-tuned Core ML model classifies document type and infers field structure. Chained as an async pipeline.' },
-      { title: 'Export flexibility', detail: 'Extracted data exports to JSON, CSV, or structured PDF. The format is chosen based on detected document type.' },
+      { title: 'Native-first, no cloud',      detail: 'All processing happens on-device. Vision framework for OCR, Core ML for classification. No API calls for sensitive document data.' },
+      { title: 'SwiftUI + declarative arch',  detail: "Single codebase for iOS and macOS via Catalyst. SwiftUI's declarative model maps cleanly to the document processing pipeline." },
+      { title: 'Vision + Core ML pipeline',   detail: 'Vision handles text detection and recognition. A fine-tuned Core ML model classifies document type and infers field structure. Chained as an async pipeline.' },
+      { title: 'Export flexibility',           detail: 'Extracted data exports to JSON, CSV, or structured PDF. The format is chosen based on detected document type.' },
     ],
     lessons: [
-      'Apple\'s Vision framework is genuinely powerful — the hard part is stitching outputs into a coherent data model.',
-      'SwiftUI\'s previews are a superpower for rapid UI iteration without running the full simulator.',
+      "Apple's Vision framework is genuinely powerful — the hard part is stitching outputs into a coherent data model.",
+      "SwiftUI's previews are a superpower for rapid UI iteration without running the full simulator.",
       'On-device ML means thinking carefully about model size vs accuracy tradeoffs.',
     ],
     impact:
-      'Currently in active development. Bridges the gap between Apple\'s powerful ML frameworks and real-world document workflows. Targeting App Store release in 2025.',
+      "Currently in active development. Bridges the gap between Apple's powerful ML frameworks and real-world document workflows. Targeting App Store release in 2025.",
     github: 'https://github.com/modak-tamajit',
     demo:   null,
     image:  '/assets/projects/extracta.png',
     architecture: [
-      { layer: 'SwiftUI Views',    desc: 'Document picker, extraction preview, export sheet'                   },
-      { layer: 'ViewModel',        desc: 'ObservableObject pipeline, async state management'                   },
-      { layer: 'Vision Pipeline',  desc: 'VNRecognizeTextRequest → bounding boxes + raw strings'               },
-      { layer: 'Core ML Model',    desc: 'Document type classification, field inference'                       },
-      { layer: 'Export Engine',    desc: 'JSON / CSV / PDF generation from structured extraction result'       },
+      { layer: 'SwiftUI Views',   desc: 'Document picker, extraction preview, export sheet'                },
+      { layer: 'ViewModel',       desc: 'ObservableObject pipeline, async state management'                },
+      { layer: 'Vision Pipeline', desc: 'VNRecognizeTextRequest → bounding boxes + raw strings'            },
+      { layer: 'Core ML Model',   desc: 'Document type classification, field inference'                    },
+      { layer: 'Export Engine',   desc: 'JSON / CSV / PDF generation from structured extraction result'    },
     ],
     codeSnippet: `// Vision text extraction pipeline
 func extractText(from image: CGImage) async throws -> [RecognizedText] {
@@ -185,7 +185,7 @@ func extractText(from image: CGImage) async throws -> [RecognizedText] {
             }
             cont.resume(returning: texts)
         }
-        request.recognitionLevel    = .accurate
+        request.recognitionLevel       = .accurate
         request.usesLanguageCorrection = true
 
         let handler = VNImageRequestHandler(cgImage: image)
@@ -328,7 +328,6 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
       <ScrollReveal className="mb-14">
         <h2 className="font-display font-bold text-xl text-primary mb-5">A slice of the code</h2>
         <div className="rounded-2xl overflow-hidden border border-border">
-          {/* Chrome bar */}
           <div className="flex items-center gap-2 px-4 py-3 bg-surface border-b border-border">
             <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
             <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
