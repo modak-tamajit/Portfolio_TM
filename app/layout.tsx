@@ -6,15 +6,19 @@ import CursorFollower from '@/components/CursorFollower';
 import PageTransition from '@/components/PageTransition';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://tamajitmodak.com'),
   title: {
     default: 'Tamajit Modak — Systems Programmer & Builder',
     template: '%s · Tamajit Modak',
   },
   description:
     'Year 1 BCA student who built a terminal OS in C, engineers Swift apps, and wires full-stack products. Deeply curious. Always building.',
-  keywords: ['Tamajit Modak','systems programmer','Swift developer','ForgeOS','BCA student','Parul University','portfolio'],
+  keywords: ['Tamajit Modak', 'systems programmer', 'Swift developer', 'ForgeOS', 'BCA student', 'Parul University', 'portfolio'],
   authors: [{ name: 'Tamajit Modak', url: 'https://github.com/modak-tamajit' }],
   creator: 'Tamajit Modak',
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website', locale: 'en_IN',
     title: 'Tamajit Modak — Systems Programmer & Builder',
@@ -45,6 +49,29 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link
           href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap"
           rel="stylesheet"
+        />
+        {/* JSON-LD Structured Data */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Tamajit Modak',
+              url: 'https://tamajitmodak.com',
+              jobTitle: 'Systems Programmer & Builder',
+              sameAs: [
+                'https://github.com/modak-tamajit',
+                'https://linkedin.com/in/tamajit-modak-76938b169',
+                'https://instagram.com/am_modak',
+              ],
+              alumniOf: {
+                '@type': 'CollegeOrUniversity',
+                name: 'Parul University',
+              },
+              knowsAbout: ['C', 'Swift', 'Systems Programming', 'Operating Systems', 'React', 'Next.js'],
+            }),
+          }}
         />
       </head>
       <body className="bg-bg text-primary font-body noise min-h-screen">

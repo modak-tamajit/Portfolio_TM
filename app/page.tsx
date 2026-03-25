@@ -6,13 +6,14 @@ import MagneticButton from '@/components/MagneticButton';
 import ToolsStrip from '@/components/ToolsStrip';
 import ScrollReveal from '@/components/ScrollReveal';
 import InteractiveTerminal from '@/components/InteractiveTerminal';
+import HintLine from '@/components/HintLine';
 
 /* ─── Stats ─── */
 const STATS = [
   { value: '~3,500', label: 'lines in ForgeOS' },
-  { value: '10+',    label: 'certifications'   },
-  { value: '3',      label: 'products shipped' },
-  { value: '8.55',   label: 'SGPA'             },
+  { value: '10+', label: 'certifications' },
+  { value: '3', label: 'products shipped' },
+  { value: '8.55', label: 'SGPA' },
 ];
 
 export default function HomePage() {
@@ -27,8 +28,8 @@ export default function HomePage() {
           <motion.div
             key="terminal"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0  }}
-            exit={  { opacity: 0, y: -30, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -30, scale: 0.97 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="w-full flex flex-col items-center"
           >
@@ -53,14 +54,14 @@ export default function HomePage() {
           <motion.div
             key="hero"
             initial={{ opacity: 0, y: 36 }}
-            animate={{ opacity: 1, y: 0  }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center text-center max-w-3xl w-full"
           >
             {/* Name */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0  }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="font-display font-extrabold text-6xl md:text-8xl tracking-tight
                          gradient-text leading-none mb-4"
@@ -73,7 +74,7 @@ export default function HomePage() {
             {/* Tagline */}
             <motion.p
               initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0  }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
               className="font-display text-xl md:text-2xl text-primary/80 font-semibold mb-3"
             >
@@ -93,7 +94,7 @@ export default function HomePage() {
             {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0  }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.42, duration: 0.5 }}
               className="flex flex-wrap items-center justify-center gap-4 mb-14"
             >
@@ -158,6 +159,12 @@ export default function HomePage() {
                 </div>
               ))}
             </motion.div>
+
+            {/* Easter egg hint */}
+            <HintLine
+              text="This portfolio has secrets. Some are hidden in plain sight."
+              className="mt-10 text-center"
+            />
           </motion.div>
         )}
       </AnimatePresence>

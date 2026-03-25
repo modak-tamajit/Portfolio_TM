@@ -3,16 +3,17 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
+import HintLine from '@/components/HintLine';
 
 const PROJECTS = [
   {
-    id:       'forgeos',
-    title:    'ForgeOS',
+    id: 'forgeos',
+    title: 'ForgeOS',
     subtitle: 'Terminal OS written from scratch in C11',
-    status:   'complete',
-    color:    '#00ff88',
-    year:     '2024',
-    stack:    ['C11', 'x86 Assembly', 'POSIX', 'GCC', 'Make', 'Linux'],
+    status: 'complete',
+    color: '#00ff88',
+    year: '2024',
+    stack: ['C11', 'x86 Assembly', 'POSIX', 'GCC', 'Make', 'Linux'],
     problem:
       'OS education is mostly theoretical — you read about kernels and memory models without ever touching one. I wanted to know what it actually feels like to write an operating system.',
     built:
@@ -22,17 +23,17 @@ const PROJECTS = [
     impact:
       'Demonstrated systems-level depth that most developers never touch — built as a first-year BCA student. Became the anchor project on my resumé and the reason recruiters kept reading.',
     github: 'https://github.com/modak-tamajit',
-    demo:   null,
-    image:  '/assets/projects/forgeos.png',
+    demo: null,
+    image: '/assets/projects/forgeos.png',
   },
   {
-    id:       'pathpilot',
-    title:    'PathPilot',
+    id: 'pathpilot',
+    title: 'PathPilot',
     subtitle: 'AI career advisor for underserved students',
-    status:   'complete',
-    color:    '#7c6af7',
-    year:     '2024',
-    stack:    ['Python', 'FastAPI', 'React', 'OpenAI API', 'PostgreSQL', 'TypeScript'],
+    status: 'complete',
+    color: '#7c6af7',
+    year: '2024',
+    stack: ['Python', 'FastAPI', 'React', 'OpenAI API', 'PostgreSQL', 'TypeScript'],
     problem:
       'Students in tier-2 cities have no access to quality career guidance. They choose branches based on what their cousin did, not what they\'re actually suited for. The information gap is real and damaging.',
     built:
@@ -42,17 +43,17 @@ const PROJECTS = [
     impact:
       'Finalist-level project addressing a real equity problem in Indian education. The LLM-guided approach reduced information paralysis for first-gen college students in simulated user testing.',
     github: 'https://github.com/modak-tamajit',
-    demo:   null,
-    image:  '/assets/projects/pathpilot.png',
+    demo: null,
+    image: '/assets/projects/pathpilot.png',
   },
   {
-    id:       'extracta',
-    title:    'Extracta',
+    id: 'extracta',
+    title: 'Extracta',
     subtitle: 'Native SwiftUI document intelligence app',
-    status:   'in-progress',
-    color:    '#f7a06a',
-    year:     '2025',
-    stack:    ['Swift', 'SwiftUI', 'Vision Framework', 'Core ML', 'iOS', 'macOS'],
+    status: 'in-progress',
+    color: '#f7a06a',
+    year: '2025',
+    stack: ['Swift', 'SwiftUI', 'Vision Framework', 'Core ML', 'iOS', 'macOS'],
     problem:
       'Extracting structured data from PDFs and scanned images is tedious. Third-party tools are clunky, cloud-dependent, and privacy-unfriendly. There should be a beautiful native solution.',
     built:
@@ -62,8 +63,8 @@ const PROJECTS = [
     impact:
       'Currently in active development. Bridges the gap between Apple\'s powerful ML frameworks and real-world document workflows. Targeting App Store release in 2025.',
     github: 'https://github.com/modak-tamajit',
-    demo:   null,
-    image:  '/assets/projects/extracta.png',
+    demo: null,
+    image: '/assets/projects/extracta.png',
   },
 ];
 
@@ -78,7 +79,7 @@ export default function ProjectsPage() {
       {/* Page header */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0  }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="mb-16"
       >
@@ -108,6 +109,12 @@ export default function ProjectsPage() {
           />
         ))}
       </div>
+
+      {/* Easter egg hint */}
+      <HintLine
+        text="If you know the sequence, you know where this goes."
+        className="mt-8 text-center"
+      />
     </div>
   );
 }
@@ -127,7 +134,7 @@ function ProjectCard({
   return (
     <motion.div
       initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0  }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
     >
       <div
@@ -197,7 +204,7 @@ function ProjectCard({
             <motion.div
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
-              exit={{   height: 0, opacity: 0 }}
+              exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="overflow-hidden"
             >

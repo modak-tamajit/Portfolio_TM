@@ -4,15 +4,16 @@ import { useState, useRef, FormEvent } from 'react';
 import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import MagneticButton from '@/components/MagneticButton';
+import HintLine from '@/components/HintLine';
 
 
 const FORMSPREE_URL = 'https://formspree.io/f/mojkoevv';
 
 const SOCIAL_LINKS = [
-  { label: 'Email',     value: 'modaktamajit999@gmail.com',    href: 'mailto:modaktamajit999@gmail.com',                icon: '✉' },
-  { label: 'GitHub',    value: '@modak-tamajit',               href: 'https://github.com/modak-tamajit',               icon: '⊕' },
-  { label: 'LinkedIn',  value: 'tamajit-modak-76938b169',      href: 'https://linkedin.com/in/tamajit-modak-76938b169',icon: '◈' },
-  { label: 'Instagram', value: '@am_modak',                    href: 'https://instagram.com/am_modak',                 icon: '◎' },
+  { label: 'Email', value: 'modaktamajit999@gmail.com', href: 'mailto:modaktamajit999@gmail.com', icon: '✉' },
+  { label: 'GitHub', value: '@modak-tamajit', href: 'https://github.com/modak-tamajit', icon: '⊕' },
+  { label: 'LinkedIn', value: 'tamajit-modak-76938b169', href: 'https://linkedin.com/in/tamajit-modak-76938b169', icon: '◈' },
+  { label: 'Instagram', value: '@am_modak', href: 'https://instagram.com/am_modak', icon: '◎' },
 ];
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
@@ -27,8 +28,8 @@ export default function ContactPage() {
 
     try {
       const res = await fetch(FORMSPREE_URL, {
-        method:  'POST',
-        body:    new FormData(e.currentTarget),
+        method: 'POST',
+        body: new FormData(e.currentTarget),
         headers: { Accept: 'application/json' },
       });
       if (res.ok) {
@@ -50,7 +51,7 @@ export default function ContactPage() {
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0  }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="mb-16"
       >
@@ -106,6 +107,12 @@ export default function ContactPage() {
                 Open to internships &amp; collaborations
               </span>
             </div>
+
+            {/* Easter egg hint */}
+            <HintLine
+              text="↑↑↓↓ — if that means anything to you, try it."
+              className="mt-6 text-center"
+            />
           </div>
         </ScrollReveal>
 
@@ -114,7 +121,7 @@ export default function ContactPage() {
           <form ref={formRef} onSubmit={handleSubmit} className="space-y-5">
 
             <div className="grid sm:grid-cols-2 gap-5">
-              <FormField label="Name"  name="name"  placeholder="Your name"      required />
+              <FormField label="Name" name="name" placeholder="Your name" required />
               <FormField label="Email" name="email" placeholder="your@email.com" required type="email" />
             </div>
 

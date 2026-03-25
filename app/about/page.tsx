@@ -3,64 +3,65 @@
 import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import MagneticButton from '@/components/MagneticButton';
+import HintLine from '@/components/HintLine';
 
 /* ─── Learning Timeline ─── */
 const TIMELINE = [
   {
-    year:   '2013',
-    title:  'The family computer',
-    color:  '#f7a06a',
+    year: '2013',
+    title: 'The family computer',
+    color: '#f7a06a',
     detail: 'Watched my father play retro games on an old PC. He slid the keyboard over and said "try it yourself." That was it.',
-    tags:   [],
+    tags: [],
   },
   {
-    year:   '2018',
-    title:  'First code — HTML in school',
-    color:  '#7c6af7',
+    year: '2018',
+    title: 'First code — HTML in school',
+    color: '#7c6af7',
     detail: 'School taught basic HTML. I learned you could make things appear on a screen by typing. That felt like power.',
-    tags:   ['HTML', 'CSS'],
+    tags: ['HTML', 'CSS'],
   },
   {
-    year:   '2020',
-    title:  'Discovered C',
-    color:  '#00ff88',
+    year: '2020',
+    title: 'Discovered C',
+    color: '#00ff88',
     detail: 'C changed everything. No garbage collector, no safety net. You either understand memory or your program crashes. I loved it.',
-    tags:   ['C', 'Pointers', 'Memory'],
+    tags: ['C', 'Pointers', 'Memory'],
   },
   {
-    year:   '2022',
-    title:  'Python + databases',
-    color:  '#a899ff',
+    year: '2022',
+    title: 'Python + databases',
+    color: '#a899ff',
     detail: 'Started building real tools. Scripts that solved actual problems. Learned SQL, FastAPI, the basics of backend engineering.',
-    tags:   ['Python', 'SQL', 'FastAPI', 'PostgreSQL'],
+    tags: ['Python', 'SQL', 'FastAPI', 'PostgreSQL'],
   },
   {
-    year:   '2024',
-    title:  'Built ForgeOS',
-    color:  '#00ff88',
+    year: '2024',
+    title: 'Built ForgeOS',
+    color: '#00ff88',
     detail: 'A ~3,500 line terminal OS in C11 from scratch. Memory allocator, scheduler, file system, interactive shell. First year of college, before I even had a desk.',
-    tags:   ['C11', 'x86', 'POSIX', 'GCC', 'Make'],
+    tags: ['C11', 'x86', 'POSIX', 'GCC', 'Make'],
   },
   {
-    year:   '2025',
-    title:  'Frontend & full-stack',
-    color:  '#7c6af7',
+    year: '2025',
+    title: 'Frontend & full-stack',
+    color: '#7c6af7',
     detail: 'React, Next.js, TypeScript. Built PathPilot for Smart India Hackathon (SIH25094). Learned that good UI is as hard as good systems work — just a different kind of hard.',
-    tags:   ['React', 'Next.js', 'TypeScript', 'Tailwind', 'SIH'],
+    tags: ['React', 'Next.js', 'TypeScript', 'Tailwind', 'SIH'],
   },
   {
-    year:   '2025',
-    title:  'Swift & Apple ecosystem',
-    color:  '#f7a06a',
+    year: '2025',
+    title: 'Swift & Apple ecosystem',
+    color: '#f7a06a',
     detail: 'Fell deep into Swift and SwiftUI. Building Extracta — a native document intelligence app using Vision framework and Core ML.',
-    tags:   ['Swift', 'SwiftUI', 'Vision', 'Core ML', 'Xcode'],
+    tags: ['Swift', 'SwiftUI', 'Vision', 'Core ML', 'Xcode'],
   },
   {
-    year:   'Now',
-    title:  'Community Lead + curious human',
-    color:  '#a899ff',
+    year: 'Now',
+    title: 'Community Lead + curious human',
+    color: '#a899ff',
     detail: 'Leading Google NXT Hub at Parul University. Learning German. Playing guitar. Writing shayari. Building whatever comes next — including a fully offline personal AI assistant.',
-    tags:   ['Leadership', 'German', 'Guitar', 'Shayari', 'Local AI'],
+    tags: ['Leadership', 'German', 'Guitar', 'Shayari', 'Local AI'],
   },
 ];
 
@@ -77,7 +78,7 @@ export default function AboutPage() {
       {/* ── Page header ── */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0  }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="mb-16"
       >
@@ -150,6 +151,11 @@ export default function AboutPage() {
               &ldquo;A curious heart, a poetic mind, and a plate full of stories — that&apos;s
               how I build my world.&rdquo;
             </p>
+
+            <HintLine
+              text="I leave breadcrumbs in my work. Always have."
+              className="mt-6"
+            />
           </article>
         </ScrollReveal>
 
@@ -185,11 +191,11 @@ export default function AboutPage() {
             {/* Quick facts */}
             <div className="space-y-2">
               {[
-                { label: 'Location', value: 'Vadodara, Gujarat'             },
-                { label: 'Program',  value: 'BCA Honours · Parul University'},
-                { label: 'Year',     value: '1st year (2025–2029)'          },
-                { label: 'SGPA',     value: '8.55'                          },
-                { label: 'Role',     value: 'Community Lead · Google NXT Hub'},
+                { label: 'Location', value: 'Vadodara, Gujarat' },
+                { label: 'Program', value: 'BCA Honours · Parul University' },
+                { label: 'Year', value: '1st year (2025–2029)' },
+                { label: 'SGPA', value: '8.55' },
+                { label: 'Role', value: 'Community Lead · Google NXT Hub' },
               ].map((f) => (
                 <div key={f.label}
                   className="flex justify-between py-2 border-b border-border/60 text-sm">
@@ -202,9 +208,9 @@ export default function AboutPage() {
             {/* Social links */}
             <div className="flex gap-3 flex-wrap">
               {[
-                { label: 'GitHub',   href: 'https://github.com/modak-tamajit'                   },
-                { label: 'LinkedIn', href: 'https://linkedin.com/in/tamajit-modak-76938b169'     },
-                { label: 'Email',    href: 'mailto:modaktamajit999@gmail.com'                    },
+                { label: 'GitHub', href: 'https://github.com/modak-tamajit' },
+                { label: 'LinkedIn', href: 'https://linkedin.com/in/tamajit-modak-76938b169' },
+                { label: 'Email', href: 'mailto:modaktamajit999@gmail.com' },
               ].map((s) => (
                 <a key={s.label} href={s.href}
                   target="_blank" rel="noopener noreferrer"
