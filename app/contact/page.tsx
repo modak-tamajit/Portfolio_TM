@@ -5,13 +5,8 @@ import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import MagneticButton from '@/components/MagneticButton';
 
-/* ─────────────────────────────────────────────
-   FORMSPREE
-   1. Go to https://formspree.io/new
-   2. Create a free form
-   3. Replace XXXXXXXX with your form ID
-───────────────────────────────────────────── */
-const FORMSPREE_URL = 'https://formspree.io/f/XXXXXXXX';
+
+const FORMSPREE_URL = 'https://formspree.io/f/mojkoevv';
 
 const SOCIAL_LINKS = [
   { label: 'Email',     value: 'modaktamajit999@gmail.com',    href: 'mailto:modaktamajit999@gmail.com',                icon: '✉' },

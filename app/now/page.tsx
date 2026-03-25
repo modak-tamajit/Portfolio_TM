@@ -8,31 +8,37 @@ const SECTIONS = [
     label:   'Building',
     icon:    '⊕',
     color:   '#f7a06a',
-    content: 'Extracta — a native SwiftUI document intelligence app. Using Apple Vision framework for OCR + a local LLM pipeline for structuring extracted data. It\'s slow, humbling, and exactly the right kind of hard.',
+    content: 'Extracta — a native SwiftUI app that uses Apple\'s Vision framework for OCR and a local LLM pipeline to extract structured data from documents. Think invoices, ID cards, receipts: scan it, and get back clean JSON. It\'s the most humbling thing I\'ve built since ForgeOS.',
   },
   {
     label:   'Learning',
     icon:    '◈',
     color:   '#7c6af7',
-    content: 'German (slowly — it\'s fighting back). Also deepening my Swift knowledge, specifically around Combine and async/await patterns. And picking up guitar chords between commits.',
+    content: 'German — Duolingo streak intact, dignity not. Also going deep on Swift concurrency (async/await, actors, structured concurrency). And slowly working through fingerstyle guitar, which is nothing like debugging and also exactly like debugging.',
   },
   {
     label:   'Reading',
     icon:    '◎',
     color:   '#00ff88',
-    content: 'The Pragmatic Programmer by Hunt & Thomas. It\'s less a programming book and more a philosophy of craft. Also some Urdu poetry collections when the code stops making sense.',
+    content: 'The Pragmatic Programmer by Hunt & Thomas — less a book, more a reckoning. Every other page makes me want to rewrite something I built six months ago. Also dipping into Mirza Ghalib\'s collected works at night. The man had no compiler and still shipped.',
   },
   {
     label:   'Thinking about',
     icon:    '⊗',
     color:   '#a899ff',
-    content: 'How AI will change the value of deep technical knowledge. My bet: it makes systems literacy more valuable, not less — because someone still needs to understand what the black box is doing.',
+    content: 'What a "local-first AI" actually means. I want to build a personal assistant that runs entirely offline — voice, vision, local LLM, persistent memory. No cloud, no subscription, no data leaving my machine. It\'s not a product idea. It\'s a conviction.',
   },
   {
     label:   'Listening to',
     icon:    '◰',
     color:   '#f7a06a',
-    content: 'Arijit Singh when writing. Instrumental lo-fi when coding. Silence when debugging.',
+    content: 'Arijit Singh when writing code that needs to feel something. Lo-fi hip-hop when I need the flow state. AR Rahman\'s older compositions when the world gets loud. And silence when a bug has me by the throat.',
+  },
+  {
+    label:   'Leading',
+    icon:    '◑',
+    color:   '#00ff88',
+    content: 'Google NXT Hub at Parul University — running workshops, connecting students to the broader tech ecosystem, and trying to make "community" mean something more than a WhatsApp group. It\'s equal parts exciting and exhausting, the way good things usually are.',
   },
 ];
 

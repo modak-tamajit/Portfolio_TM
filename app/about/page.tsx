@@ -38,15 +38,15 @@ const TIMELINE = [
     year:   '2024',
     title:  'Built ForgeOS',
     color:  '#00ff88',
-    detail: 'A ~3,500 line terminal OS in C11 from scratch. Memory allocator, scheduler, file system, interactive shell. Year 1 of college.',
+    detail: 'A ~3,500 line terminal OS in C11 from scratch. Memory allocator, scheduler, file system, interactive shell. First year of college, before I even had a desk.',
     tags:   ['C11', 'x86', 'POSIX', 'GCC', 'Make'],
   },
   {
-    year:   '2024',
+    year:   '2025',
     title:  'Frontend & full-stack',
     color:  '#7c6af7',
-    detail: 'React, Next.js, TypeScript. PathPilot for Smart India Hackathon. Learned that good UI is as hard as good systems work.',
-    tags:   ['React', 'Next.js', 'TypeScript', 'Tailwind'],
+    detail: 'React, Next.js, TypeScript. Built PathPilot for Smart India Hackathon (SIH25094). Learned that good UI is as hard as good systems work — just a different kind of hard.',
+    tags:   ['React', 'Next.js', 'TypeScript', 'Tailwind', 'SIH'],
   },
   {
     year:   '2025',
@@ -59,8 +59,8 @@ const TIMELINE = [
     year:   'Now',
     title:  'Community Lead + curious human',
     color:  '#a899ff',
-    detail: 'Leading Google NXT Hub at Parul University. Learning German. Playing guitar. Writing shayari. Building whatever comes next.',
-    tags:   ['Leadership', 'German', 'Guitar', 'Shayari'],
+    detail: 'Leading Google NXT Hub at Parul University. Learning German. Playing guitar. Writing shayari. Building whatever comes next — including a fully offline personal AI assistant.',
+    tags:   ['Leadership', 'German', 'Guitar', 'Shayari', 'Local AI'],
   },
 ];
 
