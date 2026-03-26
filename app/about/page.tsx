@@ -85,7 +85,7 @@ export default function AboutPage() {
         <span className="font-mono text-xs text-tgreen tracking-widest uppercase">
           01 / About
         </span>
-        <h1 className="font-display font-extrabold text-5xl md:text-7xl tracking-tight
+        <h1 className="font-display font-extrabold text-4xl sm:text-5xl md:text-7xl tracking-tight
                        text-primary mt-3 leading-none">
           A curious mind
           <br />

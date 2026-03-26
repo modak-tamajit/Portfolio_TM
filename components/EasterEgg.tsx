@@ -5,18 +5,17 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const KONAMI = [
-  'ArrowUp','ArrowUp','ArrowDown','ArrowDown',
-  'ArrowLeft','ArrowRight','ArrowLeft','ArrowRight',
-  'b','a',
+  'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+  'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+  'b', 'a',
 ];
 
-/* ─── Word triggers — including new phase 2 routes ─── */
 const WORD_TRIGGERS: Record<string, string> = {
-  'about':       '/about',
-  'projects':    '/projects',
-  'contact':     '/contact',
-  'now':         '/now',
-  'uses':        '/uses',
+  'about': '/about',
+  'projects': '/projects',
+  'contact': '/contact',
+  'now': '/now',
+  'uses': '/uses',
   'unlock soul': '/blog',
 };
 
@@ -26,8 +25,8 @@ interface Toast { id: number; message: string; color: string; }
 let toastId = 0;
 
 export default function EasterEgg() {
-  const router     = useRouter();
-  const bufferRef  = useRef<string[]>([]);
+  const router = useRouter();
+  const bufferRef = useRef<string[]>([]);
   const wordBufRef = useRef<string>('');
   const [toasts, setToasts] = useState<Toast[]>([]);
 
@@ -41,19 +40,17 @@ export default function EasterEgg() {
     const handler = (e: KeyboardEvent) => {
       const key = e.key;
 
-      /* Konami */
       bufferRef.current = [...bufferRef.current, key].slice(-KONAMI.length);
       if (
         bufferRef.current.length === KONAMI.length &&
         bufferRef.current.every((k, i) => k === KONAMI[i])
       ) {
         showToast('↑↑↓↓←→←→BA · Unlocking /now…', '#a899ff');
-        setTimeout(() => router.push('/now'), 900);
+        setTimeout(() => router.push('/now?konami=1'), 900);
         bufferRef.current = [];
         return;
       }
 
-      /* Word triggers */
       if (key.length === 1 || key === ' ') {
         wordBufRef.current = (wordBufRef.current + (key === ' ' ? ' ' : key))
           .slice(-MAX_BUFFER)
@@ -75,7 +72,7 @@ export default function EasterEgg() {
       }
 
       if (key === 'Escape') {
-        bufferRef.current  = [];
+        bufferRef.current = [];
         wordBufRef.current = '';
       }
     };
@@ -96,8 +93,8 @@ export default function EasterEgg() {
           <motion.div
             key={t.id}
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0,  scale: 1   }}
-            exit={  { opacity: 0, y: -10, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.9 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="px-4 py-2 rounded-xl font-mono text-xs backdrop-blur-xl
                        bg-surface/90 border border-border

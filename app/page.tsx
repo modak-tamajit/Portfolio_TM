@@ -20,7 +20,7 @@ export default function HomePage() {
   const [phase, setPhase] = useState<'terminal' | 'hero'>('terminal');
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 py-20">
+    <section className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 sm:py-20">
 
       {/* ── Phase 1: Interactive Terminal ── */}
       <AnimatePresence mode="wait">
@@ -63,7 +63,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display font-extrabold text-6xl md:text-8xl tracking-tight
+              className="font-display font-extrabold text-4xl sm:text-6xl md:text-8xl tracking-tight
                          gradient-text leading-none mb-4"
             >
               TAMAJIT
@@ -76,7 +76,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.22, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display text-xl md:text-2xl text-primary/80 font-semibold mb-3"
+              className="font-display text-lg sm:text-xl md:text-2xl text-primary/80 font-semibold mb-3"
             >
               Built an OS before building my resumé.
             </motion.p>
@@ -96,7 +96,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.42, duration: 0.5 }}
-              className="flex flex-wrap items-center justify-center gap-4 mb-14"
+              className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-14 w-full sm:w-auto"
             >
               <MagneticButton
                 as="a"
@@ -159,6 +159,16 @@ export default function HomePage() {
                 </div>
               ))}
             </motion.div>
+
+            {/* Visitor counter — mock, wire to Vercel Analytics API later */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+              className="mt-5 font-mono text-[10px] text-secondary/40 tracking-wide"
+            >
+              142 builders visited this week
+            </motion.p>
 
             {/* Easter egg hint */}
             <HintLine

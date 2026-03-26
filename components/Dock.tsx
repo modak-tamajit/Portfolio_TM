@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -11,7 +11,6 @@ import {
   AnimatePresence,
 } from 'framer-motion';
 
-/* ─── SVG Icons ─── */
 const HomeIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"
     strokeLinecap="round" strokeLinejoin="round" className="w-[18px] h-[18px]">
@@ -47,29 +46,26 @@ const ContactIcon = () => (
 );
 
 const NAV_ITEMS = [
-  { href: '/',         label: 'Home',     Icon: HomeIcon     },
-  { href: '/about',    label: 'About',    Icon: AboutIcon    },
+  { href: '/', label: 'Home', Icon: HomeIcon },
+  { href: '/about', label: 'About', Icon: AboutIcon },
   { href: '/projects', label: 'Projects', Icon: ProjectsIcon },
-  { href: '/contact',  label: 'Contact',  Icon: ContactIcon  },
+  { href: '/contact', label: 'Contact', Icon: ContactIcon },
 ];
 
-/* ─── Individual Dock Item ─── */
 interface DockItemProps {
   href: string;
   label: string;
   Icon: React.FC;
   mouseX: ReturnType<typeof useMotionValue<number>>;
+  isMobile: boolean;
 }
 
-function DockItem({ href, label, Icon, mouseX }: DockItemProps) {
+function DockItem({ href, label, Icon, mouseX, isMobile }: DockItemProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const pathname = usePathname();
-  const isActive = href === '/'
-    ? pathname === '/'
-    : pathname.startsWith(href);
+  const isActive = href === '/' ? pathname === '/' : pathname.startsWith(href);
 
-  /* Magnification: compute distance from mouse to icon center */
   const distance = useTransform(mouseX, (val: number) => {
     const el = ref.current;
     if (!el) return 9999;
@@ -80,41 +76,41 @@ function DockItem({ href, label, Icon, mouseX }: DockItemProps) {
   const sizeSync = useTransform(
     distance,
     [-130, -60, 0, 60, 130],
-    [44, 56, 70, 56, 44]
+    isMobile ? [40, 40, 40, 40, 40] : [44, 56, 70, 56, 44]
   );
   const size = useSpring(sizeSync, { mass: 0.1, stiffness: 180, damping: 14 });
 
   return (
     <div ref={ref} className="relative flex flex-col items-center justify-end">
-      {/* Tooltip */}
-      <AnimatePresence>
-        {showTooltip && (
-          <motion.div
-            initial={{ opacity: 0, y: 6, scale: 0.85 }}
-            animate={{ opacity: 1, y: 0,  scale: 1    }}
-            exit={  { opacity: 0, y: 6,  scale: 0.85 }}
-            transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="absolute bottom-full mb-3.5 px-2.5 py-1 rounded-lg text-xs
-                       font-mono text-primary/90 pointer-events-none z-50
-                       bg-surface/80 border border-border backdrop-blur-lg
-                       shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
-          >
-            {label}
-            {/* Tooltip arrow */}
-            <span className="absolute left-1/2 -translate-x-1/2 -bottom-[5px]
-                             w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px]
-                             border-l-transparent border-r-transparent border-t-border" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {!isMobile && (
+        <AnimatePresence>
+          {showTooltip && (
+            <motion.div
+              initial={{ opacity: 0, y: 6, scale: 0.85 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 6, scale: 0.85 }}
+              transition={{ duration: 0.15, ease: 'easeOut' }}
+              className="absolute bottom-full mb-3.5 px-2.5 py-1 rounded-lg text-xs
+                         font-mono text-primary/90 pointer-events-none z-50
+                         bg-surface/80 border border-border backdrop-blur-lg
+                         shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+            >
+              {label}
+              <span className="absolute left-1/2 -translate-x-1/2 -bottom-[5px]
+                               w-0 h-0 border-l-[5px] border-r-[5px] border-t-[5px]
+                               border-l-transparent border-r-transparent border-t-border" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
 
       <Link href={href} aria-label={`Navigate to ${label}`}>
         <motion.div
           style={{ width: size, height: size }}
           whileTap={{ scale: 0.82 }}
           transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-          onMouseEnter={() => setShowTooltip(true)}
-          onMouseLeave={() => setShowTooltip(false)}
+          onMouseEnter={() => !isMobile && setShowTooltip(true)}
+          onMouseLeave={() => !isMobile && setShowTooltip(false)}
           className={[
             'relative flex items-center justify-center rounded-xl cursor-pointer',
             'transition-colors duration-150',
@@ -124,7 +120,6 @@ function DockItem({ href, label, Icon, mouseX }: DockItemProps) {
           ].join(' ')}
         >
           <Icon />
-          {/* Active indicator dot */}
           {isActive && (
             <motion.span
               layoutId="dock-dot"
@@ -134,33 +129,47 @@ function DockItem({ href, label, Icon, mouseX }: DockItemProps) {
           )}
         </motion.div>
       </Link>
+
+      {isMobile && isActive && (
+        <span className="font-mono text-[8px] text-accent-light mt-1 tracking-wider uppercase">
+          {label}
+        </span>
+      )}
     </div>
   );
 }
 
-/* ─── Dock Container ─── */
 export default function Dock() {
   const mouseX = useMotionValue(Infinity);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 640 || window.matchMedia('(pointer: coarse)').matches);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   return (
     <motion.nav
       aria-label="Main navigation"
       initial={{ y: 120, opacity: 0 }}
-      animate={{ y: 0,   opacity: 1 }}
+      animate={{ y: 0, opacity: 1 }}
       transition={{ type: 'spring', stiffness: 110, damping: 22, delay: 0.6 }}
-      className="fixed bottom-0 left-0 right-0 pb-6 flex justify-center z-50 pointer-events-none"
+      className="fixed bottom-0 left-0 right-0 pb-4 sm:pb-6 flex justify-center z-50 pointer-events-none"
+      style={{ paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 1rem)' }}
     >
       <motion.div
-        onMouseMove={(e) => mouseX.set(e.clientX)}
+        onMouseMove={(e) => !isMobile && mouseX.set(e.clientX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="flex items-end gap-2.5 px-4 py-3 pointer-events-auto
-                   rounded-[22px] select-none
+        className="flex items-end gap-1.5 sm:gap-2.5 px-3 sm:px-4 py-2.5 sm:py-3 pointer-events-auto
+                   rounded-[18px] sm:rounded-[22px] select-none
                    bg-white/[0.04] backdrop-blur-3xl
                    border border-white/[0.07]
                    shadow-[0_10px_50px_rgba(0,0,0,0.7),0_2px_10px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.05)]"
       >
         {NAV_ITEMS.map((item) => (
-          <DockItem key={item.href} {...item} mouseX={mouseX} />
+          <DockItem key={item.href} {...item} mouseX={mouseX} isMobile={isMobile} />
         ))}
       </motion.div>
     </motion.nav>

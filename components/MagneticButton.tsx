@@ -32,11 +32,13 @@ export default function MagneticButton({
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
-    const rect  = ref.current.getBoundingClientRect();
-    const cx    = rect.left + rect.width  / 2;
-    const cy    = rect.top  + rect.height / 2;
-    const dx    = e.clientX - cx;
-    const dy    = e.clientY - cy;
+    /* Skip magnetic effect on touch devices */
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    const rect = ref.current.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = e.clientX - cx;
+    const dy = e.clientY - cy;
     x.set(dx * strength);
     y.set(dy * strength);
   };
@@ -52,9 +54,9 @@ export default function MagneticButton({
     onClick,
   };
   if (Tag === 'a') {
-    props.href   = href;
+    props.href = href;
     props.target = target;
-    props.rel    = rel;
+    props.rel = rel;
   }
 
   return (

@@ -4,6 +4,16 @@ import Dock from '@/components/Dock';
 import EasterEgg from '@/components/EasterEgg';
 import CursorFollower from '@/components/CursorFollower';
 import PageTransition from '@/components/PageTransition';
+import { Analytics } from '@vercel/analytics/react';
+import IdleOverlay from '@/components/IdleOverlay';
+import RageClickFeedback from '@/components/RageClickFeedback';
+import DevOverlay from '@/components/DevOverlay';
+import NightMode from '@/components/NightMode';
+import ConsoleSecret from '@/components/ConsoleSecret';
+import FakeBug from '@/components/FakeBug';
+import TimePersonality from '@/components/TimePersonality';
+import CopyToast from '@/components/CopyToast';
+import ScrollReward from '@/components/ScrollReward';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tamajitmodak.com'),
@@ -94,6 +104,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         <Dock />
         <EasterEgg />
+        <IdleOverlay />
+        <RageClickFeedback />
+        <DevOverlay />
+        <NightMode />
+        <ConsoleSecret />
+        <FakeBug />
+        <TimePersonality />
+        <CopyToast />
+        <ScrollReward />
+        <Analytics />
       </body>
     </html>
   );

@@ -49,6 +49,11 @@
   Look for:  const TOOLS = [
   Change:    Add/remove tool names from the array
 
+### Visitor stat counter
+  File:  app/page.tsx
+  Look for:  142 builders visited this week
+  Change:    Update the number (mock for now, wire to Vercel Analytics API later)
+
 
 ## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ## PAGE: ABOUT  →  app/about/page.tsx
@@ -206,6 +211,35 @@
 
 
 ## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## PAGE: DASHBOARD  →  app/dashboard/page.tsx (private)
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+### Password
+  File:  app/dashboard/page.tsx
+  Look for:  const DASHBOARD_PASSWORD = 'tamajit2026'
+  Change:    The password string
+
+### Mock stats data
+  File:  app/dashboard/page.tsx
+  Look for:  const STATS = [
+  Change:    Update values to real analytics data later
+
+### UTM links
+  File:  app/dashboard/page.tsx
+  Look for:  UTM Links
+  Note:      Reference for /hire?utm_source=... tracking URLs
+
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## PAGE: HIRE  →  app/hire/page.tsx
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+### Purpose
+  Captures UTM parameters from incoming URLs and redirects to /contact.
+  Usage: /hire?utm_source=linkedin&utm_medium=social
+
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ## COMPONENT: DOCK (bottom navbar)
 ## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -213,6 +247,7 @@
   Look for:  const NAV_ITEMS = [
   Change:    Add/remove nav items, change labels or hrefs
   Note:      Icons are inline SVGs — edit the SVG paths to change them
+  Mobile:    Magnification disabled on touch devices, shows compact nav
 
 
 ## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -230,6 +265,73 @@
     'unlock soul' → /blog
   Konami:  ↑↑↓↓←→←→BA  → /now
   Change:  Add new word: path pairs to the object
+
+### Idle Mode
+  File:  components/IdleOverlay.tsx
+  Trigger:  25 seconds of inactivity
+  Behavior: Dim overlay + "Still there… or just observing?"
+  Hook:     hooks/useIdleDetector.ts (reusable, configurable timeout)
+
+### Rage Click Detection
+  File:  components/RageClickFeedback.tsx
+  Trigger:  5+ rapid clicks anywhere on the page
+  Behavior: Playful shake message (random from array)
+  Hook:     hooks/useRageClick.ts (reusable, configurable threshold)
+
+### Developer Mode
+  File:  components/DevOverlay.tsx
+  Trigger:  Type "/dev" anywhere
+  Behavior: Overlay with tech stack, system info, debug lines
+  Hook:     hooks/useKeySequence.ts (reusable, generic word detection)
+
+### Night Mode
+  File:  components/NightMode.tsx
+  Trigger:  Auto (22:00–05:00) or type "night"
+  Behavior: Softer dark theme + "Late night builder, huh?" toast
+
+### Konami Code Enhancement
+  File:  app/now/page.tsx
+  Trigger:  Navigate to /now via Konami code (↑↑↓↓←→←→BA)
+  Behavior: Retro mode — scanlines, CRT vignette, boot log, 3 exclusive hidden sections
+  Normal:   /now without Konami shows clean page
+
+### Console Secret
+  File:  components/ConsoleSecret.tsx
+  Trigger:  Open browser DevTools console
+  Behavior: Styled greeting + global unlock("truth") function
+  Secret:   Reveals a personal message from Tamajit
+
+### Fake Bug (Controlled Glitch)
+  File:  components/FakeBug.tsx
+  Trigger:  ~1.5% chance per page load, 8–20s delay
+  Behavior: Brief visual glitch (scanlines + color shift), auto-fixes in 1.5s
+  Message:  "Relax. I break things on purpose."
+
+### Time-Based Personality
+  File:  components/TimePersonality.tsx
+  Trigger:  Automatic, once per session
+  Behavior: Greeting toast based on local time
+  Messages: Morning → "Starting fresh" / Afternoon → "Building in progress" / Night → "Real devs"
+
+### Copy Interaction
+  File:  components/CopyToast.tsx
+  Trigger:  User copies any text from the site
+  Behavior: Toast — "Taking inspiration? I respect that."
+
+### Scroll Depth Reward
+  File:  components/ScrollReward.tsx
+  Trigger:  Scrolling 90%+ of any page (once per session)
+  Behavior: Reward message + random programming quote
+
+### Smart Wrong Command
+  File:  components/InteractiveTerminal.tsx
+  Trigger:  Invalid command in terminal
+  Behavior: "command not found... But curiosity found 👀"
+
+### Easter Egg Hint Lines
+  File:  components/HintLine.tsx
+  Usage: Added on every page as subtle clues
+  Config: text prop (the hint), opacity prop (default 0.3)
 
 
 ## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -274,6 +376,38 @@
   Look for:  export const metadata: Metadata = {
   Fields:    title, description, keywords[], openGraph{}, twitter{}
   Per-page:  Each app/[page]/layout.tsx has its own metadata export
+  SEO files: app/sitemap.ts, app/robots.ts
+  OG images: app/opengraph-image.tsx, app/about/opengraph-image.tsx, app/projects/opengraph-image.tsx
+  Structured data: JSON-LD Person schema in layout.tsx <head>
+
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## GLOBAL: ANALYTICS & TRACKING
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  Vercel Analytics:  <Analytics /> in app/layout.tsx
+  Package:           @vercel/analytics
+  Dashboard:         /dashboard (password-protected, mock data)
+  UTM tracking:      /hire?utm_source=... → redirects to /contact
+
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## GLOBAL: SECURITY & DEPLOYMENT
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  File:  vercel.json
+  HSTS:  Strict-Transport-Security with 2-year max-age, preload
+  Also:  X-Content-Type-Options, X-Frame-Options, Referrer-Policy
+  Note:  Vercel auto-handles HTTP → HTTPS redirect
+
+
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+## REUSABLE HOOKS
+## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  hooks/useIdleDetector.ts   — tracks inactivity, fires onIdle/onActive
+  hooks/useRageClick.ts      — detects rapid clicks, returns isRaging
+  hooks/useKeySequence.ts    — detects typed words, fires callbacks
 
 
 ## ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -302,3 +436,5 @@
   Change nav items              →  components/Dock.tsx  →  NAV_ITEMS array
   Add an easter egg trigger     →  components/EasterEgg.tsx → WORD_TRIGGERS
   Change accent color globally  →  tailwind.config.ts   →  accent: '#7c6af7'
+  Change dashboard password     →  app/dashboard/page.tsx → DASHBOARD_PASSWORD
+  Change idle timeout           →  components/IdleOverlay.tsx → timeout: 25000

@@ -3,7 +3,7 @@
 ```
 $ ./tamajit --init
 > Loading portfolio...
-> Phase 1 complete.
+> Phase 6 complete.
 [READY]
 ```
 
@@ -22,9 +22,18 @@ $ ./tamajit --init
 
 ---
 
-## Overview
+## Features
 
-A futuristic, interactive developer portfolio that leads with a terminal animation, features a macOS-style magnification dock, easter eggs, and a hidden blog. Built to feel like a product, not a template.
+A futuristic, interactive developer portfolio built to feel like a product — not a template.
+
+- 🖥 **Terminal Hero** — typewriter animation → interactive shell with real commands
+- 🎯 **macOS-style Dock** — magnification navbar with spring physics (touch-optimized)
+- 📱 **Fully Responsive** — engineered for 320px+ with `clamp()` fonts, fluid layouts, and touch-safe interactions
+- ✨ **Micro-interactions** — magnetic buttons, cursor follower, scroll reveals, page transitions
+- 🔒 **Private Dashboard** — password-gated analytics view (mock data, ready for Vercel Analytics API)
+- 📊 **Vercel Analytics** — built-in tracking, UTM support via `/hire?utm_source=...`
+- 🔍 **SEO Optimized** — sitemap, robots.txt, JSON-LD, dynamic OG images, canonical URLs
+- 🛡 **HTTPS Enforced** — HSTS, security headers, Vercel auto-redirect
 
 ---
 
@@ -33,27 +42,52 @@ A futuristic, interactive developer portfolio that leads with a terminal animati
 | Route | Description | Access |
 |---|---|---|
 | `/` | Home — terminal hero, stats, tools strip | Public |
-| `/about` | Story, skills grid, certifications | Public |
+| `/about` | Story, timeline, skills grid, certifications | Public |
 | `/projects` | ForgeOS, PathPilot, Extracta — expandable deep dives | Public |
 | `/contact` | Contact form + social links | Public |
-| `/now` | What I'm doing right now | Hidden |
-| `/blog` | Shayari, photography, thoughts | Hidden |
+| `/uses` | Hardware, software, terminal setup | Public |
+| `/dashboard` | Private analytics dashboard | Password |
+| `/hire` | UTM tracking redirect → /contact | Hidden |
+| `/now` | What I'm doing right now | Easter Egg |
+| `/blog` | Shayari, photography, thoughts | Easter Egg |
 
 ---
 
-## Easter Eggs
+## Easter Eggs 🥚
 
-Three ways to reach the hidden pages:
+This portfolio has **13 hidden interactions**. Some are triggered, some are earned, and some just… happen.
 
-```
-Type "unlock soul"     → navigates to /blog
-Konami code            → ↑ ↑ ↓ ↓ ← → ← → B A → navigates to /now
-Type "about"           → navigates to /about
-Type "projects"        → navigates to /projects
-Type "contact"         → navigates to /contact
-```
+#### ⌨️ Keyboard Triggers
+| What to do | Hint |
+|---|---|
+| Type `unlock soul` | Opens a door you didn't know existed |
+| `↑↑↓↓←→←→BA` | The classic. You know what this is. |
+| Type `/dev` | For those who read source code |
+| Type `night` | Best tried after midnight |
+| Type any page name | The site is always listening |
 
-All triggered by keyboard input anywhere on the page — no click required.
+#### 🧠 Behavioral
+| What to do | Hint |
+|---|---|
+| Stop moving for 25s | The site notices your absence |
+| Click too many times | It has opinions about that |
+| Scroll to the very bottom | A reward for the patient |
+| Copy any text | It knows. |
+| Type a wrong command | Curiosity is never punished here |
+
+#### 🔧 Developer-Only
+| What to do | Hint |
+|---|---|
+| Open the browser console | Someone left you a message |
+| Run `unlock("truth")` in console | A personal note, if you're worthy |
+
+#### 🌙 Ambient
+| What to do | Hint |
+|---|---|
+| Visit at different times of day | The site has moods |
+| Get lucky (~1% chance) | Not everything is deterministic |
+
+> *"There are things that happen on their own — at certain times, at certain odds."*
 
 ---
 
@@ -65,10 +99,30 @@ Styling     →  Tailwind CSS 3.4
 Animation   →  Framer Motion 11
 Language    →  TypeScript 5
 Fonts       →  Syne · DM Sans · JetBrains Mono (Google Fonts)
-Deployment  →  Vercel (recommended)
+Analytics   →  Vercel Analytics
+Deployment  →  Vercel (HTTPS enforced)
 ```
 
 No unnecessary libraries. No UI component kits. Everything custom.
+
+---
+
+## Developer Features
+
+Type `/dev` anywhere to open the developer overlay:
+
+- Full tech stack breakdown
+- System status and debug info
+- Easter egg count and state
+- Build metadata
+
+Three reusable hooks power the easter egg system:
+
+```
+hooks/useIdleDetector.ts   — configurable inactivity detection
+hooks/useRageClick.ts      — rapid click pattern recognition
+hooks/useKeySequence.ts    — keyboard word trigger engine
+```
 
 ---
 
@@ -83,25 +137,36 @@ tamajit-portfolio/
 │   ├── contact/page.tsx      # Contact — form + social links
 │   ├── now/page.tsx          # /now page (hidden)
 │   ├── blog/page.tsx         # Blog — shayari + photos (hidden)
-│   ├── layout.tsx            # Root layout + SEO metadata
-│   └── globals.css           # Design system + CSS variables
+│   ├── dashboard/page.tsx    # Private analytics dashboard
+│   ├── hire/page.tsx         # UTM tracking redirect
+│   ├── sitemap.ts            # Auto-generated sitemap
+│   ├── robots.ts             # Crawler rules
+│   ├── layout.tsx            # Root layout + SEO + components
+│   └── globals.css           # Design system + responsive base
 ├── components/
-│   ├── Dock.tsx              # macOS-style magnification dock
+│   ├── Dock.tsx              # macOS dock (touch-optimized)
 │   ├── TerminalHero.tsx      # Typewriter terminal sequence
+│   ├── InteractiveTerminal.tsx # Full interactive shell
 │   ├── EasterEgg.tsx         # Konami + word trigger listener
+│   ├── IdleOverlay.tsx       # 25s idle mode
+│   ├── RageClickFeedback.tsx # Rage click detection
+│   ├── DevOverlay.tsx        # /dev developer mode
+│   ├── NightMode.tsx         # Late-night personality
+│   ├── HintLine.tsx          # Subtle hint text
 │   ├── MagneticButton.tsx    # Magnetic hover button
-│   ├── ToolsStrip.tsx        # Infinite scrolling tools strip
-│   └── ScrollReveal.tsx      # Framer Motion scroll animations
+│   ├── ToolsStrip.tsx        # Infinite scrolling tools
+│   ├── ScrollReveal.tsx      # Scroll animations
+│   ├── CursorFollower.tsx    # Custom cursor (desktop)
+│   └── PageTransition.tsx    # Page transitions
+├── hooks/
+│   ├── useIdleDetector.ts    # Idle tracking hook
+│   ├── useRageClick.ts       # Rage click hook
+│   └── useKeySequence.ts     # Key sequence hook
 ├── lib/
 │   └── utils.ts              # cn(), clamp(), lerp()
-├── public/
-│   └── assets/
-│       ├── images/           # profile.jpg
-│       ├── projects/         # forgeos.png, pathpilot.png, extracta.png
-│       ├── blog/             # photo-1.jpg, photo-2.jpg, photo-3.jpg
-│       └── resume/           # tamajit-modak-resume.pdf
+├── public/assets/
+├── vercel.json               # HSTS + security headers
 ├── tailwind.config.ts
-├── next.config.js
 └── tsconfig.json
 ```
 
@@ -154,7 +219,7 @@ public/assets/blog/photo-3.jpg                    ← photography #3
 public/assets/resume/tamajit-modak-resume.pdf     ← your latest resume
 ```
 
-The site gracefully falls back to placeholder UI if images are missing, so it works before you add them.
+The site gracefully falls back to placeholder UI if images are missing.
 
 ---
 
@@ -167,7 +232,14 @@ npm i -g vercel
 vercel
 ```
 
-Or connect your GitHub repo directly at [vercel.com](https://vercel.com) — it auto-detects Next.js and deploys on every push to `main`.
+Or connect your GitHub repo at [vercel.com](https://vercel.com) — it auto-detects Next.js and deploys on every push to `main`.
+
+### HTTPS
+
+- Vercel enforces HTTPS and auto-redirects HTTP → HTTPS
+- `vercel.json` adds HSTS headers (2-year max-age, preload)
+- All external URLs in the codebase use `https://`
+- Security headers: `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`
 
 ---
 
@@ -180,18 +252,19 @@ Accent        #7c6af7    purple — buttons, active states
 Terminal      #00ff88    neon green — terminal elements only
 Primary text  #e4e4f0    off-white
 Secondary     #5a5a7a    muted text, labels
+Warm          #f7a06a    warm orange — accents
 ```
 
 Fonts: **Syne** (headings) · **DM Sans** (body) · **JetBrains Mono** (terminal, labels)
 
 ---
 
-## Roadmap
+## Notes
 
-- [x] Phase 1 — Core portfolio, macOS dock, terminal hero, easter eggs
-- [ ] Phase 2 — Interactive terminal, project deep pages, real contact API
-- [ ] Phase 2 — Page transitions, `/uses` page, cursor follower
-- [ ] Phase 2 — MDX blog posts, dynamic OG images, analytics
+- See `HELP.md` for a full component map and editing guide
+- See `ROADMAP.md` for upcoming features
+- The dashboard uses mock data — connect Vercel Analytics API (Pro plan) for real numbers
+- Easter eggs are modular — add new ones by creating a component + hook
 
 ---
 
@@ -207,5 +280,5 @@ Year 1 BCA Honours · Parul University · Vadodara
 ---
 
 <div align="center">
-  <sub>Built with Next.js · Deployed on Vercel · Phase 1 of 2</sub>
+  <sub>Built with Next.js · Deployed on Vercel · Phase 6</sub>
 </div>

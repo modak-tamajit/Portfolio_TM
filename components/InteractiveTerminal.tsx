@@ -37,19 +37,19 @@ interface Line {
 }
 
 const INITIAL_LINES: Line[] = [
-  { type: 'output',  content: 'Welcome to the interactive shell. Type `help` to get started.' },
-  { type: 'output',  content: '─────────────────────────────────────────' },
+  { type: 'output', content: 'Welcome to the interactive shell. Type `help` to get started.' },
+  { type: 'output', content: '─────────────────────────────────────────' },
 ];
 
 export default function InteractiveTerminal() {
-  const [lines, setLines]       = useState<Line[]>(INITIAL_LINES);
-  const [input, setInput]       = useState('');
-  const [history, setHistory]   = useState<string[]>([]);
-  const [histIdx, setHistIdx]   = useState(-1);
-  const [isMin, setIsMin]       = useState(false);
-  const bottomRef               = useRef<HTMLDivElement>(null);
-  const inputRef                = useRef<HTMLInputElement>(null);
-  const router                  = useRouter();
+  const [lines, setLines] = useState<Line[]>(INITIAL_LINES);
+  const [input, setInput] = useState('');
+  const [history, setHistory] = useState<string[]>([]);
+  const [histIdx, setHistIdx] = useState(-1);
+  const [isMin, setIsMin] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
 
   /* Auto-scroll to bottom on new output */
   useEffect(() => {
@@ -59,10 +59,10 @@ export default function InteractiveTerminal() {
   const push = (line: Line) => setLines((prev) => [...prev, line]);
 
   const runCommand = (raw: string) => {
-    const cmd   = raw.trim().toLowerCase();
+    const cmd = raw.trim().toLowerCase();
     const parts = cmd.split(/\s+/);
-    const base  = parts[0];
-    const arg   = parts.slice(1).join(' ');
+    const base = parts[0];
+    const arg = parts.slice(1).join(' ');
 
     /* Log input */
     push({ type: 'input', content: raw.trim() });
@@ -149,7 +149,7 @@ export default function InteractiveTerminal() {
         break;
 
       default:
-        push({ type: 'error', content: `command not found: ${base}. Type 'help' for available commands.` });
+        push({ type: 'error', content: `command not found: ${base}\nBut curiosity found 👀 — type 'help' to see what's possible.` });
     }
   };
 
@@ -171,9 +171,9 @@ export default function InteractiveTerminal() {
       e.preventDefault();
       /* Basic tab completion */
       const COMPLETIONS = [
-        'help','ls','ls projects','cat about.md','cat now.md',
-        'open forgeos','open pathpilot','open extracta','open github','open linkedin',
-        'clear','whoami','pwd','date','echo ',
+        'help', 'ls', 'ls projects', 'cat about.md', 'cat now.md',
+        'open forgeos', 'open pathpilot', 'open extracta', 'open github', 'open linkedin',
+        'clear', 'whoami', 'pwd', 'date', 'echo ',
       ];
       const match = COMPLETIONS.find((c) => c.startsWith(input) && c !== input);
       if (match) setInput(match);
@@ -182,19 +182,19 @@ export default function InteractiveTerminal() {
 
   const lineColor = (type: Line['type']) => {
     switch (type) {
-      case 'input':   return 'text-primary/90';
-      case 'output':  return 'text-primary/60';
+      case 'input': return 'text-primary/90';
+      case 'output': return 'text-primary/60';
       case 'success': return 'text-tgreen';
-      case 'error':   return 'text-red-400/80';
+      case 'error': return 'text-red-400/80';
     }
   };
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0  }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full max-w-[580px] mx-auto"
+      className="w-full max-w-[580px] mx-auto px-1 sm:px-0"
     >
       {/* Window chrome */}
       <div className="flex items-center gap-2 px-4 py-3 border-b border-border
@@ -225,7 +225,7 @@ export default function InteractiveTerminal() {
           <motion.div
             initial={{ height: 0 }}
             animate={{ height: 'auto' }}
-            exit={  { height: 0    }}
+            exit={{ height: 0 }}
             transition={{ duration: 0.25 }}
             className="overflow-hidden"
           >
@@ -235,8 +235,8 @@ export default function InteractiveTerminal() {
               onClick={() => inputRef.current?.focus()}
             >
               {/* Output area */}
-              <div className="px-5 pt-4 pb-2 font-mono text-sm leading-7
-                              max-h-[280px] overflow-y-auto">
+              <div className="px-3 sm:px-5 pt-3 sm:pt-4 pb-2 font-mono text-xs sm:text-sm leading-6 sm:leading-7
+                              max-h-[200px] sm:max-h-[280px] overflow-y-auto">
                 {lines.map((line, i) => (
                   <div key={i} className={lineColor(line.type)}>
                     {line.type === 'input' && (
@@ -249,7 +249,7 @@ export default function InteractiveTerminal() {
               </div>
 
               {/* Input row */}
-              <div className="flex items-center gap-2 px-5 pb-4 pt-1 font-mono text-sm border-t border-border/40">
+              <div className="flex items-center gap-2 px-3 sm:px-5 pb-3 sm:pb-4 pt-1 font-mono text-xs sm:text-sm border-t border-border/40">
                 <span className="text-tgreen select-none">❯</span>
                 <input
                   ref={inputRef}
