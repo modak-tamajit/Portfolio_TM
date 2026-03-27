@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         const VERCEL_ACCESS_TOKEN = process.env.VERCEL_ACCESS_TOKEN;

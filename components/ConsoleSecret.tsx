@@ -16,7 +16,7 @@ export default function ConsoleSecret() {
         );
         console.log('%c─────────────────────────────────', 'color: #1e1e2e;');
 
-        (window as unknown as Record<string, unknown>).unlock = (secret: string) => {
+        (window as any).unlock = (secret: string) => {
             if (secret === 'truth') {
                 console.log('%c✓ Secret unlocked.', 'font-size: 14px; color: #00ff88; font-weight: bold;');
                 console.log(
@@ -27,7 +27,8 @@ export default function ConsoleSecret() {
                     '%c🔑 Bonus: Try the Konami code (↑↑↓↓←→←→BA) or type "unlock soul" anywhere on the page.',
                     'font-size: 11px; color: #f7a06a;'
                 );
-                return '🔓 Truth revealed.';
+                alert("🔓 Truth revealed: 'The best code is written at the intersection of curiosity and stubbornness.'\\n\\n(See full message in Console)");
+                return '🔓 Truth revealed in Console!';
             }
             console.log('%c✗ Unknown secret. Try: unlock("truth")', 'font-size: 12px; color: #ff5f57;');
             return '🔒 Locked.';

@@ -4,10 +4,10 @@ interface HintLineProps {
   className?: string;
 }
 
-export default function HintLine({ text, opacity = 0.3, className = '' }: HintLineProps) {
+export default function HintLine({ text, opacity = 0.15, className = '' }: HintLineProps) {
   return (
     <p
-      className={`font-mono text-[10px] text-secondary select-none ${className}`}
+      className={`font-mono text-[9px] text-secondary/40 select-none ${className}`}
       style={{ opacity }}
     >
       {text}
