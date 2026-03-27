@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+import { track } from '@vercel/analytics/react';
 
 function HireRedirect() {
     const router = useRouter();
@@ -20,6 +21,9 @@ function HireRedirect() {
 
         if (Object.keys(utmData).length > 0) {
             sessionStorage.setItem('utm_data', JSON.stringify(utmData));
+            
+            // Track UTM parameters explicitly in Vercel Analytics
+            track('Hire Page View', utmData);
         }
 
         /* Redirect to /contact */

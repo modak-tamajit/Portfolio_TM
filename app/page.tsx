@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MagneticButton from '@/components/MagneticButton';
 import ToolsStrip from '@/components/ToolsStrip';
@@ -160,15 +160,8 @@ export default function HomePage() {
               ))}
             </motion.div>
 
-            {/* Visitor counter — mock, wire to Vercel Analytics API later */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7, duration: 0.5 }}
-              className="mt-5 font-mono text-[10px] text-secondary/40 tracking-wide"
-            >
-              142 builders visited this week
-            </motion.p>
+            {/* Visitor counter — pulled from Vercel Analytics API */}
+            <VisitorCounter />
 
             {/* Easter egg hint */}
             <HintLine
@@ -206,6 +199,46 @@ export default function HomePage() {
         </ScrollReveal>
       )}
     </section>
+  );
+}
+
+/* Dynamic Visitor Counter Component */
+function VisitorCounter() {
+  const [visitors, setVisitors] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch('/api/analytics')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && typeof data.visitors === 'number') {
+          setVisitors(data.visitors);
+        }
+      })
+      .catch((err) => console.error('Failed to fetch visitors', err));
+  }, []);
+
+  if (visitors === null) {
+      return (
+        <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.7, duration: 0.5 }}
+        className="mt-5 font-mono text-[10px] text-secondary/30 tracking-wide animate-pulse"
+      >
+        loading metrics...
+      </motion.p>
+      );
+  }
+
+  return (
+    <motion.p
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.7, duration: 0.5 }}
+      className="mt-5 font-mono text-[10px] text-secondary/50 tracking-wide"
+    >
+      {visitors.toLocaleString()} builders visited recently
+    </motion.p>
   );
 }
 
