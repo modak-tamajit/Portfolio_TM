@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect, KeyboardEvent } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
+import useSound from 'use-sound';
+import { Volume2, VolumeX } from 'lucide-react';
 
 /* ─────────────────────────────────────────────
    COMMAND REGISTRY
@@ -50,6 +52,22 @@ export default function InteractiveTerminal() {
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  // Sound design
+  const [isSoundOn, setIsSoundOn] = useState(true);
+  const [playTyping] = useSound('https://actions.google.com/sounds/v1/impacts/wood_hit_metal.ogg', { volume: 0.1, interrupt: true });
+
+  // Load sound preference
+  useEffect(() => {
+    const saved = localStorage.getItem('terminal-sound');
+    if (saved !== null) setIsSoundOn(saved === 'true');
+  }, []);
+
+  const toggleSound = () => {
+    const next = !isSoundOn;
+    setIsSoundOn(next);
+    localStorage.setItem('terminal-sound', String(next));
+  };
 
   /* Auto-scroll to bottom on new output */
   useEffect(() => {
@@ -154,7 +172,12 @@ export default function InteractiveTerminal() {
   };
 
   const handleKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (isSoundOn && e.key.length === 1 && e.key !== 'Enter') {
+      playTyping();
+    }
+    
     if (e.key === 'Enter') {
+      if (isSoundOn) playTyping();
       runCommand(input);
       setInput('');
     } else if (e.key === 'ArrowUp') {
@@ -214,9 +237,18 @@ export default function InteractiveTerminal() {
         <span className="ml-3 text-xs font-mono text-secondary select-none">
           tamajit@portfolio ~ %
         </span>
-        <span className="ml-auto text-[10px] font-mono text-secondary/40">
-          interactive shell v2
-        </span>
+        <div className="ml-auto flex items-center gap-3">
+          <button 
+            onClick={toggleSound} 
+            className="text-secondary/40 hover:text-secondary/80 transition-colors"
+            title={isSoundOn ? "Mute typing sound" : "Enable typing sound"}
+          >
+            {isSoundOn ? <Volume2 size={12} /> : <VolumeX size={12} />}
+          </button>
+          <span className="text-[10px] font-mono text-secondary/40">
+            interactive shell v2
+          </span>
+        </div>
       </div>
 
       {/* Terminal body */}

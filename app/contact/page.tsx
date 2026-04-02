@@ -2,6 +2,7 @@
 
 import { useState, useRef, FormEvent } from 'react';
 import { motion } from 'framer-motion';
+import confetti from 'canvas-confetti';
 import ScrollReveal from '@/components/ScrollReveal';
 import MagneticButton from '@/components/MagneticButton';
 import HintLine from '@/components/HintLine';
@@ -35,6 +36,12 @@ export default function ContactPage() {
       if (res.ok) {
         setStatus('sent');
         formRef.current?.reset();
+        confetti({
+          particleCount: 120,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#7c6af7', '#a899ff', '#00ff88', '#f7a06a'],
+        });
         setTimeout(() => setStatus('idle'), 5000);
       } else {
         setStatus('error');

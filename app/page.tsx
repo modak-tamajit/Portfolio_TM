@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import MagneticButton from '@/components/MagneticButton';
 import ToolsStrip from '@/components/ToolsStrip';
 import ScrollReveal from '@/components/ScrollReveal';
@@ -18,6 +18,8 @@ const STATS = [
 
 export default function HomePage() {
   const [phase, setPhase] = useState<'terminal' | 'hero'>('terminal');
+  const { scrollY } = useScroll();
+  const heroParallax = useTransform(scrollY, [0, 1000], [0, 250]);
 
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center px-4 py-12 sm:py-20">
@@ -58,18 +60,20 @@ export default function HomePage() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col items-center text-center max-w-3xl w-full"
           >
-            {/* Name */}
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display font-extrabold text-4xl sm:text-6xl md:text-8xl tracking-tight
-                         gradient-text leading-none mb-4"
-            >
-              TAMAJIT
-              <br />
-              MODAK
-            </motion.h1>
+            {/* Name with subtle scroll parallax */}
+            <motion.div style={{ y: heroParallax }}>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="font-display font-extrabold text-4xl sm:text-6xl md:text-8xl tracking-tight
+                           gradient-text leading-none mb-4"
+              >
+                TAMAJIT
+                <br />
+                MODAK
+              </motion.h1>
+            </motion.div>
 
             {/* Tagline */}
             <motion.p

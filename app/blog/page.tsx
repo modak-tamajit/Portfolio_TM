@@ -4,6 +4,11 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import HintLine from '@/components/HintLine';
+import Image from 'next/image';
+
+import photo1 from '@/public/assets/blog/photo-1.jpg';
+import photo2 from '@/public/assets/blog/photo-2.jpg';
+import photo3 from '@/public/assets/blog/photo-3.jpg';
 
 /* ─── Shayari / poetry entries ─── */
 const SHAYARI = [
@@ -45,21 +50,21 @@ const PHOTOS = [
     id: 1,
     caption: 'First light through a hostel window',
     note: 'There\'s something about the first hour of the day that belongs only to you. Before the notifications. Before the compiler errors.',
-    src: '/assets/blog/photo-1.jpg',
+    src: photo1,
     accent: '#f7a06a',
   },
   {
     id: 2,
     caption: 'Terminal at 3 AM',
     note: 'Green text on black screen. The most honest thing I know. It never lies about what you gave it.',
-    src: '/assets/blog/photo-2.jpg',
+    src: photo2,
     accent: '#00ff88',
   },
   {
     id: 3,
     caption: 'Old tea stall, Vadodara',
     note: 'The best conversations happen where WiFi is bad and chai is strong. This place has seen more ideas than most offices.',
-    src: '/assets/blog/photo-3.jpg',
+    src: photo3,
     accent: '#7c6af7',
   },
 ];
@@ -187,26 +192,11 @@ export default function BlogPage() {
                     className="w-full aspect-[16/9] bg-surface-2 flex items-center
                                 justify-center relative overflow-hidden"
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={p.src}
                       alt={p.caption}
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.currentTarget as HTMLImageElement;
-                        target.style.display = 'none';
-                        const parent = target.parentElement!;
-                        parent.style.background = `radial-gradient(circle at 30% 50%, ${p.accent}15, #111118)`;
-                        const div = document.createElement('div');
-                        div.className = 'flex flex-col items-center justify-center gap-3 w-full h-full';
-                        div.innerHTML = `
-                          <span style="font-size:3rem;opacity:0.15">◎</span>
-                          <span style="font-family:var(--font-jetbrains);font-size:0.7rem;color:#5a5a7a;letter-spacing:0.15em;text-transform:uppercase">
-                            photo · add ${p.src}
-                          </span>
-                        `;
-                        parent.appendChild(div);
-                      }}
+                      placeholder="blur"
                     />
                   </div>
 

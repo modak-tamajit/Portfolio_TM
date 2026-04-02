@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import ScrollReveal from '@/components/ScrollReveal';
 import MagneticButton from '@/components/MagneticButton';
 import HintLine from '@/components/HintLine';
+import Image from 'next/image';
+import profilePic from '@/public/assets/images/profile.jpg';
 
 /* ─── Learning Timeline ─── */
 const TIMELINE = [
@@ -167,24 +169,14 @@ export default function AboutPage() {
               className="w-full aspect-square rounded-2xl overflow-hidden
                          border border-border bg-surface-2
                          flex items-center justify-center
-                         shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+                         shadow-[0_20px_60px_rgba(0,0,0,0.5)]
+                         relative"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/assets/images/profile.jpg"
+              <Image
+                src={profilePic}
                 alt="Tamajit Modak"
                 className="w-full h-full object-cover"
-                onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  target.style.display = 'none';
-                  const parent = target.parentElement!;
-                  parent.innerHTML = `
-                    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;height:100%;">
-                      <span style="font-family:var(--font-syne);font-size:4rem;font-weight:800;background:linear-gradient(135deg,#e4e4f0,#a899ff,#7c6af7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">TM</span>
-                      <span style="font-family:var(--font-jetbrains);font-size:0.65rem;color:#5a5a7a;letter-spacing:0.15em;">TAMAJIT MODAK</span>
-                    </div>
-                  `;
-                }}
+                placeholder="blur"
               />
             </div>
 

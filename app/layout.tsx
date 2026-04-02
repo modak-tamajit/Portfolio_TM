@@ -12,9 +12,33 @@ import NightMode from '@/components/NightMode';
 import ConsoleSecret from '@/components/ConsoleSecret';
 import FakeBug from '@/components/FakeBug';
 import TimePersonality from '@/components/TimePersonality';
+import { Syne, DM_Sans, JetBrains_Mono } from 'next/font/google';
+
+const syne = Syne({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800'],
+  variable: '--font-syne',
+  display: 'swap',
+});
+
+const dmSans = DM_Sans({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  variable: '--font-dm-sans',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  variable: '--font-jetbrains',
+  display: 'swap',
+});
 import CopyToast from '@/components/CopyToast';
 import ScrollReward from '@/components/ScrollReward';
 import ChatBot from '@/components/ChatBot';
+import PWAPrompt from '@/components/PWAPrompt';
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://tamajitmodak.com'),
   title: {
@@ -53,12 +77,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap"
-          rel="stylesheet"
+        <link rel="manifest" href="/manifest.json" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js').catch(function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                  });
+                });
+              }
+            `,
+          }}
         />
         {/* JSON-LD Structured Data */}
         <script
@@ -84,7 +115,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className="bg-bg text-primary font-body noise min-h-screen">
+      <body suppressHydrationWarning className={`bg-bg text-primary font-body noise min-h-screen ${syne.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}>
         {/* Ambient background glow */}
         <div aria-hidden="true" className="fixed inset-0 pointer-events-none overflow-hidden z-0">
           <div className="absolute top-[-10%] left-[40%] w-[900px] h-[700px] bg-accent/[0.04] rounded-full blur-[140px]" />
@@ -114,6 +145,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CopyToast />
         <ScrollReward />
         <ChatBot />
+        <PWAPrompt />
         <Analytics />
       </body>
     </html>

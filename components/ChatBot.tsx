@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, User, Bot, Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import profilePic from '@/public/assets/images/profile.jpg';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -101,8 +103,8 @@ export default function ChatBot() {
               {/* Header */}
               <div className="bg-zinc-950 p-4 border-b border-zinc-800 flex justify-between items-center">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden border border-zinc-700">
-                    <img src="/assets/images/profile.jpg" alt="Tamajit" className="w-full h-full object-cover" />
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center overflow-hidden border border-zinc-700 relative">
+                    <Image src={profilePic} alt="Tamajit" className="object-cover" fill sizes="32px" placeholder="blur" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-zinc-100 text-sm">Talk to Tamajit</h3>
@@ -121,8 +123,8 @@ export default function ChatBot() {
               <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent">
                 {messages.length === 0 ? (
                   <div className="flex flex-col items-center justify-center h-full text-center gap-4 text-zinc-400">
-                    <div className="w-16 h-16 rounded-full overflow-hidden border border-zinc-700 shadow-md">
-                      <img src="/assets/images/profile.jpg" alt="Tamajit" className="w-full h-full object-cover" />
+                    <div className="w-16 h-16 rounded-full overflow-hidden border border-zinc-700 shadow-md relative">
+                      <Image src={profilePic} alt="Tamajit" className="object-cover" fill sizes="64px" placeholder="blur" />
                     </div>
                     <p className="text-sm px-4">
                       Hi! I'm an AI version of Tamajit. Ask me about my projects, skills, or what I'm up to.
@@ -148,10 +150,10 @@ export default function ChatBot() {
                         animate={{ opacity: 1, y: 0 }}
                         className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'ml-auto flex-row-reverse' : ''}`}
                       >
-                        <div className={`w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden ${
+                        <div className={`w-8 h-8 relative rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden ${
                           msg.role === 'user' ? 'bg-zinc-800' : 'bg-zinc-900 border border-zinc-700'
                         }`}>
-                          {msg.role === 'user' ? <User size={14} /> : <img src="/assets/images/profile.jpg" alt="Tamajit" className="w-full h-full object-cover" />}
+                          {msg.role === 'user' ? <User size={14} /> : <Image src={profilePic} alt="Tamajit" className="object-cover" fill sizes="32px" placeholder="blur" />}
                         </div>
                         <div className={`p-3 rounded-2xl text-sm ${
                           msg.role === 'user' 
@@ -168,8 +170,8 @@ export default function ChatBot() {
                         animate={{ opacity: 1, y: 0 }}
                         className="flex gap-3 max-w-[85%]"
                       >
-                        <div className="w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center bg-zinc-900 border border-zinc-700 overflow-hidden">
-                          <img src="/assets/images/profile.jpg" alt="Tamajit" className="w-full h-full object-cover" />
+                        <div className="w-8 h-8 relative rounded-full flex-shrink-0 flex items-center justify-center bg-zinc-900 border border-zinc-700 overflow-hidden">
+                          <Image src={profilePic} alt="Tamajit" className="object-cover" fill sizes="32px" placeholder="blur" />
                         </div>
                         <div className="p-4 rounded-2xl rounded-tl-sm bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center gap-1">
                           <motion.div
@@ -229,9 +231,9 @@ export default function ChatBot() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={toggleChat}
-          className="w-14 h-14 rounded-full bg-zinc-100 text-zinc-900 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-zinc-200 p-0"
+          className="w-14 h-14 relative rounded-full bg-zinc-100 text-zinc-900 flex items-center justify-center shadow-lg hover:shadow-xl transition-shadow overflow-hidden border border-zinc-200 p-0"
         >
-          {isOpen ? <X size={24} /> : <img src="/assets/images/profile.jpg" alt="Tamajit" className="w-full h-full object-cover pointer-events-none" />}
+          {isOpen ? <X size={24} className="z-10 relative" /> : <div className="absolute inset-0 z-0 pointer-events-none"><Image src={profilePic} alt="Tamajit" className="object-cover" fill sizes="56px" placeholder="blur" /></div>}
         </motion.button>
       </div>
     </>
