@@ -14,7 +14,7 @@ import FakeBug from '@/components/FakeBug';
 import TimePersonality from '@/components/TimePersonality';
 import CopyToast from '@/components/CopyToast';
 import ScrollReward from '@/components/ScrollReward';
-
+import ChatBot from '@/components/ChatBot';
 export const metadata: Metadata = {
   metadataBase: new URL('https://tamajitmodak.com'),
   title: {
@@ -51,7 +51,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -113,6 +113,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <TimePersonality />
         <CopyToast />
         <ScrollReward />
+        <ChatBot />
         <Analytics />
       </body>
     </html>
