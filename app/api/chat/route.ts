@@ -6,10 +6,13 @@ import { systemPrompt } from '@/lib/chatbot-prompt';
 // Initialize core clients
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL || '',
-  token: process.env.UPSTASH_REDIS_REST_TOKEN || '',
-});
+const redisUrl = process.env.UPSTASH_REDIS_REST_URL;
+const redisToken = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+const redis = redisUrl && redisToken ? new Redis({
+  url: redisUrl,
+  token: redisToken,
+}) : null;
 
 // Configure rate limit parameters
 const RATE_LIMIT_MAX_REQUESTS = 50;
@@ -17,21 +20,23 @@ const RATE_LIMIT_WINDOW_SECONDS = 3600; // 1 hour
 
 export async function POST(req: Request) {
   try {
-    // Basic rate limiting setup
-    const ip = req.headers.get('x-forwarded-for') || 'anonymous_ip';
-    const redisKey = `ratelimit:chat:${ip}`;
-    
-    // Check and increment rate limit counter
-    const currentCount = await redis.incr(redisKey);
-    if (currentCount === 1) {
-      await redis.expire(redisKey, RATE_LIMIT_WINDOW_SECONDS);
-    }
+    // Basic rate limiting setup (only if Redis is configured)
+    if (redis) {
+      const ip = req.headers.get('x-forwarded-for') || 'anonymous_ip';
+      const redisKey = `ratelimit:chat:${ip}`;
+      
+      // Check and increment rate limit counter
+      const currentCount = await redis.incr(redisKey);
+      if (currentCount === 1) {
+        await redis.expire(redisKey, RATE_LIMIT_WINDOW_SECONDS);
+      }
 
-    if (currentCount > RATE_LIMIT_MAX_REQUESTS) {
-      return NextResponse.json(
-        { error: "Come back in a bit — or just email me." },
-        { status: 429 } // Too Many Requests
-      );
+      if (currentCount > RATE_LIMIT_MAX_REQUESTS) {
+        return NextResponse.json(
+          { error: "Come back in a bit — or just email me." },
+          { status: 429 } // Too Many Requests
+        );
+      }
     }
 
     const body = await req.json();
