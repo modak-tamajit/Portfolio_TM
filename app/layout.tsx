@@ -38,6 +38,7 @@ import CopyToast from '@/components/CopyToast';
 import ScrollReward from '@/components/ScrollReward';
 import ChatBot from '@/components/ChatBot';
 import PWAPrompt from '@/components/PWAPrompt';
+import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://tamajitmodak.com'),
@@ -130,7 +131,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
         {/* Page content with transitions */}
         <PageTransition>
-          <main className="relative z-10 pb-28">{children}</main>
+          <div className="flex flex-col min-h-screen">
+            <main className="relative z-10 flex-grow pb-28">{children}</main>
+            <Footer />
+          </div>
         </PageTransition>
 
         <Dock />

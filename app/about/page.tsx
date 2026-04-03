@@ -6,6 +6,8 @@ import MagneticButton from '@/components/MagneticButton';
 import HintLine from '@/components/HintLine';
 import Image from 'next/image';
 import profilePic from '@/public/assets/images/profile.jpg';
+import SkillsGraph from '@/components/SkillsGraph';
+import { GitHubCalendar } from 'react-github-calendar';
 
 /* ─── Learning Timeline ─── */
 const TIMELINE = [
@@ -303,6 +305,32 @@ export default function AboutPage() {
               {cert}
             </span>
           ))}
+        </div>
+      </ScrollReveal>
+
+      {/* ── Skills Ecosystem ── */}
+      <ScrollReveal className="mb-16">
+        <h2 className="font-display font-bold text-2xl text-primary mb-6">
+          Skills Ecosystem
+        </h2>
+        <SkillsGraph />
+      </ScrollReveal>
+
+      {/* ── GitHub Activity ── */}
+      <ScrollReveal className="mb-20">
+        <h2 className="font-display font-bold text-2xl text-primary mb-6">
+          Shipping Daily
+        </h2>
+        <div className="p-4 sm:p-6 rounded-2xl border border-border bg-surface-2 flex items-center justify-center overflow-x-auto">
+          <div className="min-w-[700px]">
+            <GitHubCalendar 
+              username="modak-tamajit" 
+              colorScheme="dark"
+              theme={{
+                dark: ['#111118', '#1a332d', '#225244', '#00ff88', '#f7a06a'],
+              }}
+            />
+          </div>
         </div>
       </ScrollReveal>
 
