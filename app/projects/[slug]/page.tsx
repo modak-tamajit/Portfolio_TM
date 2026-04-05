@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import ScrollReveal from '@/components/ScrollReveal';
 import MagneticButton from '@/components/MagneticButton';
+import ForgeOSEmbed from '@/components/ForgeOSEmbed';
 
 /* ─────────────────────────────────────────────
    PROJECT DATA
@@ -302,6 +303,17 @@ export default function ProjectPage({ params }: { params: { slug: string } }) {
           ))}
         </div>
       </ScrollReveal>
+
+      {/* ── WebAssembly Terminal Embed (Specific to ForgeOS) ── */}
+      {project.title === 'ForgeOS' && (
+        <ScrollReveal className="mb-14">
+          <h2 className="font-display font-bold text-xl text-primary mb-5">Live WebAssembly Terminal</h2>
+          <p className="text-secondary/70 mb-5 leading-7 text-sm max-w-2xl">
+            This is not a mockup. The C11 OS shell has been compiled to WebAssembly via Emscripten to run natively in your browser. Booting the interactive instance now — type <code className="text-primary font-mono bg-surface border border-border px-1.5 py-0.5 rounded">help</code>.
+          </p>
+          <ForgeOSEmbed />
+        </ScrollReveal>
+      )}
 
       {/* ── Technical Decisions ── */}
       <ScrollReveal className="mb-14">

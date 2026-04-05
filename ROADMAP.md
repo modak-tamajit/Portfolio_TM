@@ -1,14 +1,4 @@
 
-   Commit message:
-   feat: phase 8 — micro-interactions, GitHub stats, Spotify widget,
-   /resume, /stack, /hire pages
-
-
-## 📋 PHASE 9 — ForgeOS Live Demo (WebAssembly)
-   Priority:  🟢 AMBITIOUS — the legendary feature
-   Effort:    ~2 days
-   Prerequisite: ForgeOS source code is clean and buildable
-
    What it is:
    Compile ForgeOS to WebAssembly using Emscripten.
    Embed a real running terminal in /projects/forgeos.
